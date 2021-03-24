@@ -1,0 +1,34 @@
+http:
+  address: :8090
+  workers:
+    command: "php -f /var/www/html/public/index.php"
+    pool:
+      numWorkers: 4
+
+# Additional HTTP headers and CORS control.
+headers:
+  # Middleware to handle CORS requests
+  cors:
+    allowedOrigin: "*"
+    allowedHeaders: "*"
+    allowedMethods: "GET,POST"
+    allowCredentials: true
+    exposedHeaders: "Cache-Control,Content-Language,Content-Type,Expires,Last-Modified,Pragma"
+
+    # Max allowed age in seconds
+    maxAge: 600
+
+# reload can reset rr servers when files change
+reload:
+  # refresh internval
+  interval: 1s
+  # file extensions to watch
+  patterns: [".php"]
+  # list of services to watch
+  services:
+    http:
+      # list of dirs
+      dirs: ["/var/www/html"]
+      # include sub directories
+      recursive: true
+

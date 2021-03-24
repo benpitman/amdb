@@ -1,0 +1,32 @@
+<head>
+    <title>{{ meta.title }}</title>
+
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <meta name="title" content="{{ meta.title }}" />
+
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.13.1/css/all.css" />
+
+    {% for script in scripts %}
+        <script src="/{{ script }}"></script>
+    {% endfor %}
+
+    {# {% if data.include_master_styles %}
+        <link rel="stylesheet" type="text/css" href="/assets/css/master.css" />
+    {% endif %} #}
+
+    <link rel="icon" type="image/x-icon" href="/assets/img/favicon.png" />
+
+    <!-- apple iphone comp -->
+    <meta name="apple-mobile-web-app-capable" content="no" />
+    <link rel="apple-touch-startup-image" href="/assets/img/favicon.png" />
+
+    <!-- windows phone comp -->
+    <meta name="application-name" content="{{ meta.title }}" />
+    <meta name="msapplication-TileColor" content="#e22828" />
+
+    <meta name="robots" content="noindex">
+</head>

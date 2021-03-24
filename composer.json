@@ -1,0 +1,38 @@
+{
+    "name": "",
+    "description": "",
+    "authors": [
+        {
+            "name": "Ben Pitman"
+        }
+    ],
+    "require": {
+        "pitmanware/kentron": "^2.0",
+        "pitmanware/kentron-slim": "^2.0",
+        "pitmanware/kentron-illuminate": "^2.0",
+        "pitmanware/kentron-twig": "^2.0",
+        "pitmanware/kentron-phpmailer": "^2.0",
+        "spiral/roadrunner": "^1.9.2"
+    },
+    "require-dev": {
+        "spiral/dumper": "*",
+        "nyholm/psr7-server": "^1.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "App\\": "app",
+            "Vendor\\": "vendor"
+        },
+        "exclude-from-classmap": [
+            "app/View"
+        ]
+    },
+    "config": {
+        "github-oauth": {
+            "github.com": "b02e770de34c795b4f6ab11c8339744d47eb441c"
+        },
+        "preferred-install": "source"
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true
+}

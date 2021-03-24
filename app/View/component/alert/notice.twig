@@ -1,0 +1,5 @@
+<div class="alert alert-notice {{ classes|default('') }}">
+    {% for notice in notices %}
+        <span>{{ notice }}</span>
+    {% endfor %}
+</div>

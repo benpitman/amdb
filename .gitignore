@@ -1,0 +1,18 @@
+#Node
+node_modules
+
+#Composer
+vendor
+
+#Ignore all log files
+*.log
+
+#Git keep files to "keep" the directory lines in place
+!*.gitkeep
+
+phinx.json
+
+#App files
+app/Core/Config/Config.json
+
+storage

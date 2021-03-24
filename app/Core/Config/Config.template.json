@@ -1,0 +1,33 @@
+{
+
+    "slim" : {
+        "settings" : {
+            "addContentLengthHeader"            : false,
+            "displayErrorDetails"               : true,
+            "debug"                             : true,
+            "determineRouteBeforeAppMiddleware" : true,
+            "httpVersion"                       : 2
+        }
+    },
+
+    "app" : {
+        "allow_system_access" : true,
+        "environment": "dev"
+    },
+
+    "database" : {
+        "database_key" : "1f7c206350d1e1932c52057ec239f89461e36f188d0a6483384c82fa736a894e",
+
+        "settings" : {
+            "_comment"  : "Must match illuminate db config",
+            "driver"    : "mysql",
+            "host"      : "localhost",
+            "database"  : "",
+            "username"  : "root",
+            "password"  : "",
+            "charset"   : "utf8",
+            "collation" : "utf8_unicode_ci",
+            "prefix"    : ""
+        }
+    }
+}

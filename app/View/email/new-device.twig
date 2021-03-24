@@ -1,0 +1,124 @@
+<div id="email-body">
+
+    <div id="email-header">
+        <div></div>
+        {% if data.logo_cid is defined %}
+            <img id="logo" src="{{ data.logo_cid }}" alt="logo"/>
+        {% else %}
+            <i id="logo" class="fa fa-tv"></i>
+        {% endif %}
+    </div>
+
+    <div id="email-content">
+
+        <h3>Hey {{ data.name }}</h3>
+
+        <p id="email-content-notice">We see you are trying to log in on a new device.</p>
+
+        <p id="device-code-preamble">Just enter the code below on your screen and you're good to go.</p>
+
+        <div id="device-code"><span>{{ data.code }}</span></div>
+
+        <p id="email-afterthought">If this was not you, please reset your password as soon as possible.</p>
+
+    </div>
+
+</div>
+
+<style>
+
+    * {
+        color: #282828;
+    }
+
+    body {
+        font-family: sans-serif;
+        padding: 16px;
+        background-color: #ffffff;
+    }
+
+    a {
+        text-decoration: none;
+    }
+
+    p {
+        margin: 0;
+    }
+
+    #email-body {
+        position: relative;
+        border-radius: 16px;
+        padding: 16px 0 0 0;
+        display: flex;
+        flex-direction: column;
+        overflow: hidden;
+        border: 1px solid #d0d0d0;
+        background-color: #fafafa;
+    }
+
+    #email-content > h3 {
+        margin: 0 0 12px 0;
+    }
+
+    #email-content-notice {
+        font-size: 20px;
+        margin-bottom: 12px;
+    }
+
+    #device-code-preamble {
+        font-weight: bold;
+        margin-bottom: 6px;
+    }
+
+    #device-code {
+        padding: 16px;
+        border: 4px dotted #1976D2;
+        margin: 0 auto 14px auto;
+        justify-content: center;
+    }
+    #device-code > span {
+        letter-spacing: 8px;
+        padding-left: 8px;
+        font-weight: bold;
+        font-size: 20px;
+    }
+
+    #email-header {
+        display: flex;
+        padding-bottom: 8px;
+        margin-right: 16px;
+    }
+
+    #email-header > div {
+
+        background: linear-gradient(
+            to bottom,
+            #d50000 calc(100% / 6),
+            #ff6d00 calc(100% / 6) calc((100% / 6) * 2),
+            #ffd600 calc((100% / 6) * 2) calc((100% / 6) * 3),
+            #00c853 calc((100% / 6) * 3) calc((100% / 6) * 4),
+            #2979ff calc((100% / 6) * 4) calc((100% / 6) * 5),
+            #6a1b9a calc((100% / 6) * 5) calc((100% / 6) * 6)
+        );
+        width: 100%;
+        margin: 4px 0 12px 0;
+    }
+
+    #logo {
+        height: 64px;
+        font-size: 64px;
+    }
+
+    #email-content {
+        display: flex;
+        flex-direction: column;
+        padding: 16px;
+        border-top: 1px solid #d0d0d0;
+        text-align: center;
+    }
+
+    #email-afterthought {
+        font-size: 15px;
+    }
+
+</style>

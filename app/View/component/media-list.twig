@@ -1,0 +1,107 @@
+{% macro iterate_media(mediaList) %}
+    <div class="media-list-component">
+
+        <div class="media-list-container">
+
+            {% for media in mediaList.list %}
+
+                <div class="media-component">
+                    <a href="/media/{{ media.id }}"></a>
+                    <img src={{ media.file_path }} />
+
+                    <div class="media-info">
+                        <span>{{ media.title }}</span>
+                        <span>({{ media.release_year }})</span>
+                    </div>
+                </div>
+
+                {% if loop.last %}
+                    <div><span>See More +</span></div>
+                {% endif %}
+
+            {% else %}
+
+                <div><span>{{ mediaList.on_empty }}</span></div>
+
+            {% endfor %}
+
+        </div>
+
+    </div>
+
+    <style>
+
+        .media-list-component {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 1rem;
+            padding: 1rem 1rem 0.5rem 1rem;
+        }
+
+        .media-list-container {
+            display: flex;
+            flex-direction: row;
+            overflow-x: auto;
+            padding-bottom: 0.5rem;
+        }
+
+        .media-component {
+            height: 207px;
+            min-width: 140px;
+            max-width: 140px;
+            border-radius: 0.2rem;
+            box-shadow: 1px 1px 1px var(--black);
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+            cursor: pointer;
+        }
+        .media-component:not(:last-child) {
+            margin-right: 1rem;
+        }
+        .media-component > a {
+            position: absolute;
+            display: block;
+            left: 0;
+            right: 0;
+            top: 0;
+            bottom: 0;
+            z-index: 1;
+        }
+        .media-component > img {
+            max-width: 100%;
+        }
+        .media-info {
+            transition: 0.6s ease;
+            position: absolute;
+            bottom: 0;
+            right: 0;
+            left: 0;
+            padding: 0.2rem 0.4rem;
+            background-color: rgba(0,0,0,0.8);
+            box-shadow: 0 0 0 0 rgba(0,0,0,0.8);
+        }
+
+        @media (hover: hover) {
+
+            .media-component:hover > .media-info {
+                transform: translate(0);
+                box-shadow: 0 0 10px 200px rgba(0,0,0,0.8);
+            }
+            .media-info {
+                transform: translate(0, 100%);
+                display: flex;
+                flex-direction: column;
+            }
+        }
+
+        @media screen and (max-width: 450px) {
+
+            .media-component {
+                height: 269px;
+                min-width: 182px;
+                max-width: 182px;
+            }
+        }
+
+    </style>
+{% endmacro %}

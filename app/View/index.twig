@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+
+    <head>
+        <title>{{ meta.title }}</title>
+
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+        <meta name="title" content="{{ meta.title }}" />
+
+        <script src="/assets/js/jquery-3.5.1.slim.min.js"></script>
+
+        {% for script in scripts %}
+            <script src="/{{ script }}"></script>
+        {% endfor %}
+
+        {# {% if data.include_master_styles %}
+            <link rel="stylesheet" type="text/css" href="/assets/css/master.css" />
+        {% endif %} #}
+
+        <link rel="icon" type="image/x-icon" href="/assets/img/favicon.png" />
+
+        <!-- apple iphone comp -->
+        <meta name="apple-mobile-web-app-capable" content="no" />
+        <link rel="apple-touch-startup-image" href="/assets/img/favicon.png" />
+
+        <!-- windows phone comp -->
+        <meta name="application-name" content="{{ meta.title }}" />
+        <meta name="msapplication-TileColor" content="#e22828" />
+
+        <meta name="robots" content="noindex">
+    </head>
+
+    <body>
+
+
+    {% if frame is defined and frame is not null %}
+        {% include frame %}
+    {% else %}
+        <div id="app"></div>
+    {% endif %}
+
+    </body>
+
+</html>

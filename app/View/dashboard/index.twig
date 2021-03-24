@@ -1,0 +1,51 @@
+{% from "component/media-list.twig" import iterate_media %}
+
+<section id="dashboard-full">
+
+    <article class="dashboard-article">
+
+        <div class="article-header">
+            <span>New Releases</span>
+        </div>
+
+        {{ iterate_media(data.new_releases) }}
+
+    </article>
+
+    <article class="dashboard-article">
+
+        <div class="article-header">
+            <span>Recently Watched</span>
+        </div>
+
+        {{ iterate_media(data.recently_watched) }}
+
+    </article>
+
+</section>
+
+<style>
+
+    #dashboard-full {
+        display: flex;
+        flex-direction: column;
+        padding: 1rem;
+        max-width: var(--max-width);
+        margin: 0 auto;
+    }
+
+    .dashboard-article {
+        display: flex;
+        flex-direction: column;
+    }
+    .dashboard-article:not(:last-child) {
+        margin-bottom: 1rem;
+    }
+    .dashboard-article > .article-header {
+        padding: 0.2rem 1rem;
+    }
+    .dashboard-article > .article-header > span {
+        font-weight: bold;
+    }
+
+</style>
