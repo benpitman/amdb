@@ -1,6 +1,6 @@
 {
-    "name": "",
-    "description": "",
+    "name": "benpitman/amdb",
+    "description": "Alek's Movie DB",
     "authors": [
         {
             "name": "Ben Pitman"
@@ -12,7 +12,8 @@
         "pitmanware/kentron-illuminate": "^2.0",
         "pitmanware/kentron-twig": "^2.0",
         "pitmanware/kentron-phpmailer": "^2.0",
-        "spiral/roadrunner": "^1.9.2"
+        "spiral/roadrunner": "^1.9.2",
+        "symfony/console": "^5.0"
     },
     "require-dev": {
         "spiral/dumper": "*",
@@ -28,9 +29,6 @@
         ]
     },
     "config": {
-        "github-oauth": {
-            "github.com": "b02e770de34c795b4f6ab11c8339744d47eb441c"
-        },
         "preferred-install": "source"
     },
     "minimum-stability": "dev",

@@ -1,8 +1,8 @@
 <?php
 
+use App\Core\Console\ConsoleService;
 use App\Core\Store\Config;
 use App\Core\Store\Variable\Variable;
-use App\Module\Core\System\Cron\CronService;
 use App\Module\Core\System\Variable\VariableSqlService;
 use Illuminate\Database\Capsule\Manager as Capsule;
 
@@ -22,4 +22,4 @@ $capsule->bootEloquent();
 
 Variable::build(VariableSqlService::getAll(), Config::getDatabaseKey());
 
-CronService::run();
+(new ConsoleService())->run();

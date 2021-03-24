@@ -1,7 +1,6 @@
 <?php
 
 use Phinx\Migration\AbstractMigration;
-use Phinx\Db\Adapter\MysqlAdapter;
 
 final class SystemAuth extends AbstractMigration
 {
@@ -17,7 +16,7 @@ final class SystemAuth extends AbstractMigration
     public function down (): void
     {
         if ($this->hasTable("system_auth")) {
-            $this->table("system_auth")->drop();
+            $this->table("system_auth")->drop()->save();
         }
     }
 
@@ -28,6 +27,7 @@ final class SystemAuth extends AbstractMigration
             [
                 "id"     => "system_auth_id",
                 "null"   => false,
+                "length" => 11,
                 "signed" => false
             ]
         );
@@ -38,7 +38,7 @@ final class SystemAuth extends AbstractMigration
             "string",
             [
                 "after"  => "system_auth_id",
-                "length" => 256,
+                "length" => 255,
                 "null"   => false
             ]
         );
@@ -56,11 +56,10 @@ final class SystemAuth extends AbstractMigration
 
         $table->addColumn(
             "system_auth_active",
-            "integer",
+            "boolean",
             [
                 "after"   => "system_auth_application_key",
                 "null"    => false,
-                "length"  => MysqlAdapter::INT_TINY,
                 "default" => 1
             ]
         );

@@ -1,5 +1,6 @@
 <?php
 
+use Phinx\Db\Adapter\MysqlAdapter;
 use Phinx\Migration\AbstractMigration;
 
 final class SystemAudit extends AbstractMigration
@@ -16,7 +17,7 @@ final class SystemAudit extends AbstractMigration
     public function down (): void
     {
         if ($this->hasTable("system_audit")) {
-            $this->table("system_audit")->drop();
+            $this->table("system_audit")->drop()->save();
         }
     }
 
@@ -27,7 +28,8 @@ final class SystemAudit extends AbstractMigration
             [
                 "id"     => "system_audit_id",
                 "null"   => false,
-                "signed" => false
+                "signed" => false,
+                "length" => 11
             ]
         );
         $table->addIndex("system_audit_id", ["unique" => true]);
@@ -38,6 +40,7 @@ final class SystemAudit extends AbstractMigration
             [
                 "after"   => "system_audit_id",
                 "length"  => 11,
+                "signed"  => false,
                 "null"    => true,
                 "default" => null
             ]
@@ -47,8 +50,8 @@ final class SystemAudit extends AbstractMigration
             "system_auth",
             "system_auth_id",
             [
-                "delete" => "NO_ACTION",
-                "update" => "NO_ACTION"
+                "delete" => "RESTRICT",
+                "update" => "RESTRICT"
             ]
         );
 
@@ -56,7 +59,7 @@ final class SystemAudit extends AbstractMigration
             "system_audit_direction",
             "enum",
             [
-                "after"  => "system_audit_user_login_id",
+                "after"  => "system_audit_auth_id",
                 "null"   => false,
                 "values"  => [
                     "INBOUND",
@@ -71,7 +74,7 @@ final class SystemAudit extends AbstractMigration
             [
                 "after"  => "system_audit_direction",
                 "null"   => false,
-                "length" => 1028
+                "length" => 1023
             ]
         );
 
@@ -80,8 +83,9 @@ final class SystemAudit extends AbstractMigration
             "text",
             [
                 "after"   => "system_audit_route",
+                "length"  => MysqlAdapter::TEXT_REGULAR,
+                "null"    => true,
                 "default" => null,
-                "null"    => true
             ]
         );
 
@@ -90,8 +94,9 @@ final class SystemAudit extends AbstractMigration
             "text",
             [
                 "after"   => "system_audit_request_body",
+                "length"  => MysqlAdapter::TEXT_REGULAR,
+                "null"    => true,
                 "default" => null,
-                "null"    => true
             ]
         );
 
@@ -100,8 +105,9 @@ final class SystemAudit extends AbstractMigration
             "integer",
             [
                 "after"   => "system_audit_response_body",
+                "length"  => 3,
+                "null"    => true,
                 "default" => null,
-                "null"    => true
             ]
         );
 
