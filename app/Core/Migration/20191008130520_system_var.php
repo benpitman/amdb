@@ -132,7 +132,7 @@ final class SystemVar extends AbstractMigration
                 ],
                 [
                     "system_var_id"           => 2,
-                    "system_var_name"         => "SYSTEM//ALLOWED_ACCESS",
+                    "system_var_name"         => "SYSTEM//NAME",
                     "system_var_value"        => "true",
                     "system_var_encrypted"    => 0,
                     "system_var_type"         => "bool",
@@ -140,6 +140,14 @@ final class SystemVar extends AbstractMigration
                 ],
                 [
                     "system_var_id"           => 3,
+                    "system_var_name"         => "SYSTEM//ALLOWED_ACCESS",
+                    "system_var_value"        => "true",
+                    "system_var_encrypted"    => 0,
+                    "system_var_type"         => "bool",
+                    "system_var_date_created" => $now
+                ],
+                [
+                    "system_var_id"           => 4,
                     "system_var_name"         => "SYSTEM//DEFAULT_DATETIME_FORMAT",
                     "system_var_value"        => "Y-m-d H:i:s",
                     "system_var_encrypted"    => 0,
@@ -147,7 +155,7 @@ final class SystemVar extends AbstractMigration
                     "system_var_date_created" => $now
                 ],
                 [
-                    "system_var_id"           => 4,
+                    "system_var_id"           => 5,
                     "system_var_name"         => "EMAIL//SMTP",
                     "system_var_value"        => "email-smtp.eu-west-1.amazonaws.com",
                     "system_var_encrypted"    => 0,
@@ -155,7 +163,7 @@ final class SystemVar extends AbstractMigration
                     "system_var_date_created" => $now
                 ],
                 [
-                    "system_var_id"           => 5,
+                    "system_var_id"           => 6,
                     "system_var_name"         => "EMAIL//PORT",
                     "system_var_value"        => "587",
                     "system_var_encrypted"    => 0,
@@ -163,7 +171,7 @@ final class SystemVar extends AbstractMigration
                     "system_var_date_created" => $now
                 ],
                 [
-                    "system_var_id"           => 6,
+                    "system_var_id"           => 7,
                     "system_var_name"         => "EMAIL//METHOD",
                     "system_var_value"        => "tls",
                     "system_var_encrypted"    => 0,
@@ -171,7 +179,7 @@ final class SystemVar extends AbstractMigration
                     "system_var_date_created" => $now
                 ],
                 [
-                    "system_var_id"           => 7,
+                    "system_var_id"           => 8,
                     "system_var_name"         => "EMAIL//USERNAME",
                     "system_var_value"        => "",
                     "system_var_encrypted"    => 1,
@@ -179,7 +187,7 @@ final class SystemVar extends AbstractMigration
                     "system_var_date_created" => $now
                 ],
                 [
-                    "system_var_id"           => 8,
+                    "system_var_id"           => 9,
                     "system_var_name"         => "EMAIL//PASSWORD",
                     "system_var_value"        => "",
                     "system_var_encrypted"    => 1,
@@ -187,7 +195,7 @@ final class SystemVar extends AbstractMigration
                     "system_var_date_created" => $now
                 ],
                 [
-                    "system_var_id"           => 9,
+                    "system_var_id"           => 10,
                     "system_var_name"         => "EMAIL//DEFAULT_FROM",
                     "system_var_value"        => "",
                     "system_var_encrypted"    => 1,

@@ -53,26 +53,6 @@ final class SystemAudit extends AbstractMigration
         );
 
         $table->addColumn(
-            "system_audit_user_login_id",
-            "integer",
-            [
-                "after"   => "system_audit_auth_id",
-                "length"  => 11,
-                "null"    => true,
-                "default" => null
-            ]
-        );
-        $table->addForeignKey(
-            "system_audit_user_login_id",
-            "system_user_login",
-            "system_user_login_id",
-            [
-                "delete" => "NO_ACTION",
-                "update" => "NO_ACTION"
-            ]
-        );
-
-        $table->addColumn(
             "system_audit_direction",
             "enum",
             [

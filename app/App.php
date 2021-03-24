@@ -58,7 +58,7 @@ final class App extends AApp
     {
         $capsule = new Capsule();
 
-        $capsule->addConnection(Config::getDatabaseConfig(), "default");
+        $capsule->addConnection(Config::getDatabaseConfig());
         $capsule->setAsGlobal();
         $capsule->bootEloquent();
     }

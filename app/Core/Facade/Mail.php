@@ -16,6 +16,7 @@ final class Mail extends AAlert
     {
         $this->mailEntity = new MailTransportEntity();
 
+        $this->mailEntity->setHost(Variable::getEmailSMTP());
         $this->mailEntity->setPort(Variable::getEmailPort());
         $this->mailEntity->setMethod(Variable::getEmailMethod());
         $this->mailEntity->setUsername(Variable::getEmailUsername());

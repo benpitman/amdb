@@ -9,7 +9,6 @@ use Kentron\Facade\DT;
 final class AuditMapEntity extends AMapEntity
 {
     private $authID;
-    private $userDeviceID;
     private $direction;
     private $route;
     private $method;
@@ -25,11 +24,6 @@ final class AuditMapEntity extends AMapEntity
     public function getAuthID (): ?int
     {
         return $this->authID;
-    }
-
-    public function getUserDeviceID (): ?int
-    {
-        return $this->userDeviceID;
     }
 
     public function getDirection (): string
@@ -74,11 +68,6 @@ final class AuditMapEntity extends AMapEntity
     public function setAuthID (?int $authID): void
     {
         $this->authID = $authID;
-    }
-
-    public function setUserDeviceID (?int $userDeviceID): void
-    {
-        $this->userDeviceID = $userDeviceID;
     }
 
     public function setDirection (string $direction): void

@@ -23,11 +23,6 @@ final class AuditRepository extends ARepository
         $this->addUpdate("system_audit_duration", $duration);
     }
 
-    public function updateUserLoginID (int $userLoginID): void
-    {
-        $this->addUpdate("system_audit_user_login_id", $userLoginID);
-    }
-
     public function updateStatusCode (int $statusCode): void
     {
         $this->addUpdate("system_audit_status_code", $statusCode);

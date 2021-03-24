@@ -3,7 +3,6 @@
 namespace App\Module\Core\System\Audit;
 
 use App\Core\Store\Local;
-use App\Core\Template\ISqlService;
 
 use App\Module\Core\Entity\Database\System\Audit\AuditDBEntity;
 use App\Core\Store\Variable\Variable;
@@ -12,7 +11,7 @@ use App\Module\Core\System\Audit\Repository\AuditRepository;
 
 use Kentron\Facade\DT;
 
-class AuditSqlService implements ISqlService
+class AuditSqlService
 {
     public static function insertOne (AuditDBEntity $auditDBEntity): void
     {
@@ -62,10 +61,6 @@ class AuditSqlService implements ISqlService
 
         $auditRepository->whereID($auditDBEntity->getID());
         $auditRepository->updateDuration($diff->format("%H:%I:%S.%F"));
-
-        if (Local::isLoggedIn()) {
-            $auditRepository->updateUserLoginID(Local::getLoginID());
-        }
 
         if (is_int($statusCode)) {
             $auditRepository->updateStatusCode($statusCode);
