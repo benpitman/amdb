@@ -19,7 +19,7 @@ class AuditSqlService
 
         $auditDBEntity->setAuthID(Variable::getAuthID());
 
-        $auditRepository->insertNew($auditDBEntity);
+        $auditRepository->insertOne($auditDBEntity);
     }
 
     public static function saveInboundRequest (string $route, ?string $requestBody = null): AuditDBEntity

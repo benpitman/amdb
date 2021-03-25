@@ -1322,16 +1322,16 @@
         },
         {
             "name": "pitmanware/kentron",
-            "version": "2.0.2",
+            "version": "2.0.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/pitmanware/kentron.git",
-                "reference": "1fba7f6d110ed6c48831105044582e18e828f185"
+                "reference": "f36aee77ad0fc7e8ab2458c32a25c981913c37bd"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/pitmanware/kentron/zipball/1fba7f6d110ed6c48831105044582e18e828f185",
-                "reference": "1fba7f6d110ed6c48831105044582e18e828f185",
+                "url": "https://api.github.com/repos/pitmanware/kentron/zipball/f36aee77ad0fc7e8ab2458c32a25c981913c37bd",
+                "reference": "f36aee77ad0fc7e8ab2458c32a25c981913c37bd",
                 "shasum": ""
             },
             "require": {
@@ -1358,22 +1358,22 @@
             "description": "Core classes",
             "support": {
                 "issues": "https://github.com/pitmanware/kentron/issues",
-                "source": "https://github.com/pitmanware/kentron/tree/v2.0.2"
+                "source": "https://github.com/pitmanware/kentron/tree/v2.0.3"
             },
-            "time": "2021-03-22T23:16:14+00:00"
+            "time": "2021-03-24T20:24:40+00:00"
         },
         {
             "name": "pitmanware/kentron-illuminate",
-            "version": "2.0.1",
+            "version": "2.0.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/pitmanware/kentron-illuminate.git",
-                "reference": "255b53eca61f079965d9c1cc720c1e2383c42a1c"
+                "reference": "1dc1c24e2434fe4e785eb5b0684615ff01d69405"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/pitmanware/kentron-illuminate/zipball/255b53eca61f079965d9c1cc720c1e2383c42a1c",
-                "reference": "255b53eca61f079965d9c1cc720c1e2383c42a1c",
+                "url": "https://api.github.com/repos/pitmanware/kentron-illuminate/zipball/1dc1c24e2434fe4e785eb5b0684615ff01d69405",
+                "reference": "1dc1c24e2434fe4e785eb5b0684615ff01d69405",
                 "shasum": ""
             },
             "require": {
@@ -1402,9 +1402,9 @@
             "description": "Core Illuminate extension",
             "support": {
                 "issues": "https://github.com/pitmanware/kentron-illuminate/issues",
-                "source": "https://github.com/pitmanware/kentron-illuminate/tree/v2.0.1"
+                "source": "https://github.com/pitmanware/kentron-illuminate/tree/v2.0.2"
             },
-            "time": "2021-03-24T14:38:54+00:00"
+            "time": "2021-03-24T20:53:11+00:00"
         },
         {
             "name": "pitmanware/kentron-phpmailer",

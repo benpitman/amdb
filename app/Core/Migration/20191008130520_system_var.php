@@ -201,6 +201,14 @@ final class SystemVar extends AbstractMigration
                     "system_var_encrypted"    => 1,
                     "system_var_type"         => "string",
                     "system_var_date_created" => $now
+                ],
+                [
+                    "system_var_id"           => 11,
+                    "system_var_name"         => "IMDB//URL",
+                    "system_var_value"        => "https://datasets.imdbws.com/",
+                    "system_var_encrypted"    => 0,
+                    "system_var_type"         => "string",
+                    "system_var_date_created" => $now
                 ]
             ]
         );

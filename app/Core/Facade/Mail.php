@@ -12,7 +12,7 @@ final class Mail extends AAlert
 {
     private $mailEntity;
 
-    public function __construct ()
+    public function __construct()
     {
         $this->mailEntity = new MailTransportEntity();
 
@@ -26,17 +26,17 @@ final class Mail extends AAlert
         $this->mailEntity->setIsHtml();
     }
 
-    public function setSubject (string $subject): void
+    public function setSubject(string $subject): void
     {
         $this->mailEntity->setSubject($subject);
     }
 
-    public function setBody (string $body): void
+    public function setBody(string $body): void
     {
         $this->mailEntity->setBody($body);
     }
 
-    public function addImage (string $imagePath): string
+    public function addImage(string $imagePath): string
     {
         $cid = Hash::generateRandom(8);
 
@@ -47,7 +47,7 @@ final class Mail extends AAlert
         return $cid;
     }
 
-    public function send (string $target): bool
+    public function send(string $target): bool
     {
         $this->mailEntity->addRecipient($target);
 
@@ -63,7 +63,7 @@ final class Mail extends AAlert
      * Factories
      */
 
-    public static function getNewDeviceMail (string $userDisplayName, string $code): self
+    public static function getNewDeviceMail(string $userDisplayName, string $code): self
     {
         $mail = new self();
 

@@ -10,6 +10,7 @@ error_reporting(E_ALL);
 define("PUBLIC_DIR", __DIR__);
 define("ROOT_DIR", realpath(PUBLIC_DIR . "/.."));
 define("APP_DIR", ROOT_DIR . "/app");
+define("STORAGE_DIR", ROOT_DIR . "/storage");
 
 // Set date time
 date_default_timezone_set('Europe/London');
