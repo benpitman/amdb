@@ -2,10 +2,15 @@
 
 namespace App\Http\Api\Schema;
 
-use App\Core\Service\Schema;
+use Kentron\Service\Schema;
 
 final class SchemaFactory
 {
+    public static function getSearchSchema(): string
+    {
+        return self::getSchema("Search", "Search");
+    }
+
     /**
      * Private methods
      */

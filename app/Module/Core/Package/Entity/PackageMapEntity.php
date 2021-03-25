@@ -56,6 +56,6 @@ final class PackageMapEntity extends AMapEntity
     public function getNewClass (): ADataset
     {
         $classPath = $this->classPath;
-        return new $classPath();
+        return new $classPath($this->getPutName());
     }
 }

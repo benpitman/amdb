@@ -90,6 +90,16 @@ final class SystemAudit extends AbstractMigration
         );
 
         $table->addColumn(
+            "system_audit_method",
+            "string",
+            [
+                "after"  => "system_audit_route",
+                "length" => 7,
+                "null"   => false
+            ]
+        );
+
+        $table->addColumn(
             "system_audit_response_body",
             "text",
             [

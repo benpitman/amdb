@@ -1,0 +1,12 @@
+{
+    "type": "object",
+    "additionalProperties": false,
+
+    "properties": {
+        "q": {"$ref": "#/definitions/stringDef"}
+    },
+
+    "required": [
+        "q"
+    ]
+}

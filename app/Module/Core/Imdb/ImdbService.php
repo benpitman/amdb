@@ -3,93 +3,90 @@
 namespace App\Module\Core\Imdb;
 
 use App\Core\Service\Error;
-use App\Core\Store\Variable\Variable;
+use App\Core\Store\Imdb;
 use App\Module\Core\Entity\Database\Package\PackageDBCollectionEntity;
+use App\Module\Core\Imdb\Entity\ImdbEntity;
 use App\Module\Core\Package\Entity\PackageMapEntity;
-use Kentron\Facade\Curl;
+use App\Module\Core\Title\TitleSqlService;
+use Kentron\Service\File;
 
 final class ImdbService
 {
-    private $url;
-    private $uri;
-
-    public function __construct()
+    public function downloadPackages(PackageDBCollectionEntity $packageDBCollectionEntity): ImdbEntity
     {
-        $this->url = Variable::getProviderUrl();
-    }
+        $rootImdbEntity = new ImdbEntity();
 
-    public function runAll(PackageDBCollectionEntity $packageDBCollectionEntity): bool
-    {
         /** @var PackageMapEntity */
         foreach ($packageDBCollectionEntity->iterateEntities() as $packageMapEntity) {
-            if (!$this->run($packageMapEntity)) {
-                return false;
+            $imdbEntity = $this->downloadPackage($packageMapEntity);
+
+            if ($imdbEntity->hasErrors()) {
+                $rootImdbEntity->mergeAlerts($imdbEntity);
+                break;
             }
         }
 
-        return true;
+        return $rootImdbEntity;
     }
 
-    public function run(PackageMapEntity $packageMapEntity): bool
+    public function downloadPackage(PackageMapEntity $packageMapEntity): ImdbEntity
     {
-        $this->uri = $packageMapEntity->getUri();
+        $imdbEntity = new ImdbEntity();
+        $datasetClass = $packageMapEntity->getNewClass();
 
-        $putPath = STORAGE_DIR . "/" . $packageMapEntity->getPutName();
-        $gzPath = "{$putPath}.gz";
-        $tsvPath = "{$putPath}.tsv";
-
-        if (!$this->download($gzPath)) {
-            return false;
+        if (!$datasetClass->run()) {
+            $imdbEntity->mergeAlerts($datasetClass);
         }
 
-        $this->uncompress($gzPath, $tsvPath);
+        TitleSqlService::bulkInsert($datasetClass->getTsvPath());
 
-        return true;
+        return $imdbEntity;
+    }
+
+    public function cacheInfo(string $imdbId): void
+    {
+        $dump = File::get(Imdb::TITLE_URL . $imdbId);
+
+        if (is_null($dump)) {
+            return;
+        }
+
+        if (!$this->cachePosters($dump)) {
+            Error::save("Failed to cache poster for {$imdbId}");
+        }
+        if (!$this->cacheDescription($dump)) {
+            Error::save("Failed to cache description for {$imdbId}");
+        }
     }
 
     /**
      * Private methods
      */
 
-    private function download($putPath): bool
+    private function cachePosters(string $dump): bool
     {
-        $curl = new Curl();
-        $fileHandle = fopen($putPath, "w");
+        preg_match('/og:image.+?content="\K[^"]+/', $dump, $matches);
 
-        $curl->setGet();
-        $curl->setUrl("{$this->url}/{$this->uri}");
-
-        $callback = function ($ch, string $string) use ($fileHandle) {
-            fwrite($fileHandle, $string);
-            return strlen($string);
-        };
-
-        $curl->setOpt(CURLOPT_WRITEFUNCTION, $callback);
-
-        if (!$curl->execute()) {
-            Error::save($curl->getErrors());
-            fclose($fileHandle);
-
+        if (empty($matches)) {
             return false;
         }
 
-        fclose($fileHandle);
+        $smallCover = $matches[0];
+        $fullCover = preg_replace('/(.=?\._V1_).+(.\w{3})$/', '$1$2', $smallCover);
 
         return true;
     }
 
-    private function uncompress(string $gzPath, string $tsvPath): void
+    private function cacheDescription(string $dump): bool
     {
-        $gzFileHandle = gzopen($gzPath, "rb");
-        $tsvFileHandle = fopen($tsvPath, "w");
+        preg_match('/og:description.+?content="\K[^"]+/', $dump, $matches);
 
-        while (!gzeof($gzFileHandle)) {
-            $string = gzread($gzFileHandle, 4096);
-            fwrite($tsvFileHandle, $string, strlen($string));
+        if (empty($matches)) {
+            return false;
         }
 
-        gzclose($gzFileHandle);
-        fclose($tsvFileHandle);
-        unlink($gzPath);
+        $description = $matches[0];
+
+        return true;
     }
 }
