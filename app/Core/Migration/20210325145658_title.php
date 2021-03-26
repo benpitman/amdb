@@ -94,17 +94,27 @@ final class Title extends AMigration
         );
 
         $table->addColumn(
+            "title_description",
+            "string",
+            [
+                "after"  => "title_original",
+                "length" => 5095,
+                "null"   => false
+            ]
+        );
+
+        $table->addColumn(
             "title_is_adult",
             "boolean",
             [
-                "after" => "title_original",
+                "after" => "title_description",
                 "null"  => false
             ]
         );
 
         $table->addColumn(
             "title_start_year",
-            "integers",
+            "integer",
             [
                 "after"   => "title_is_adult",
                 "length"  => 4,
@@ -115,7 +125,7 @@ final class Title extends AMigration
 
         $table->addColumn(
             "title_end_year",
-            "integers",
+            "integer",
             [
                 "after"   => "title_start_year",
                 "length"  => 4,
@@ -126,7 +136,7 @@ final class Title extends AMigration
 
         $table->addColumn(
             "title_runtime",
-            "integers",
+            "integer",
             [
                 "after"   => "title_end_year",
                 "length"  => 3,

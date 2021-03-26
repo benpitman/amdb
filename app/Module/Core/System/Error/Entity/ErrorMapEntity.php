@@ -6,16 +6,16 @@ use Kentron\Entity\Template\AMapEntity;
 
 final class ErrorMapEntity extends AMapEntity
 {
-    private $auditID;
+    private $systemAuditID;
     private $text;
 
     /**
      * Getters
      */
 
-    public function getAuditID (): ?int
+    public function getSystemAuditID (): ?int
     {
-        return $this->auditID;
+        return $this->systemAuditID;
     }
 
     public function getText (): string
@@ -27,9 +27,9 @@ final class ErrorMapEntity extends AMapEntity
      * Setters
      */
 
-    public function setAuditID (?int $auditID): void
+    public function setSystemAuditID (?int $systemAuditID): void
     {
-        $this->auditID = $auditID;
+        $this->systemAuditID = $systemAuditID;
     }
 
     public function setText (string $text): void

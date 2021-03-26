@@ -4,7 +4,7 @@ namespace App\Core\Model;
 
 use Kentron\Template\AModel;
 
-final class SystemVar extends AModel
+final class Title extends AModel
 {
     public $primaryKey = "title_id";
 

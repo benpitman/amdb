@@ -26,6 +26,10 @@ final class TitleDBEntity extends ADBEntity
             "get" => "getOriginal",
             "set" => "setOriginal"
         ],
+        "title_description" => [
+            "get" => "getDescription",
+            "set" => "setDescription"
+        ],
         "title_is_adult" => [
             "get" => "getIsAdult",
             "set" => "setIsAdult"

@@ -2,6 +2,7 @@
 
 namespace App\Module\Core\System\Cron;
 
+use App\Core\Service\Error;
 use App\Module\Core\System\Cron\CronSqlService;
 
 use App\Module\Core\System\Cron\Entity\{CronEntity, CronMapEntity};
@@ -11,8 +12,6 @@ use App\Module\Core\Entity\Database\System\Cron\CronAuditDBCollectionEntity;
 use App\Module\Core\System\Cron\Factory\CronFactory;
 
 use App\Module\Core\System\Cron\CronAuditSqlService;
-
-use App\Core\Service\Mail\Mail;
 
 final class CronService
 {
@@ -28,12 +27,12 @@ final class CronService
 
         $erroredCrons = [];
 
-        foreach ($cronDBCollectionEntity->filter([["canRun", "same", true]]) as $cronDBEntity) {
+        foreach ($cronDBCollectionEntity->filter([["canRun", "same", true]]) as $cronMapEntity) {
             $auditDBEntity = $cronAuditDBCollectionEntity->getNewCoreEntity();
 
-            $cronEntity = self::execute($cronDBEntity->getRootEntity());
+            $cronEntity = self::execute($cronMapEntity);
 
-            $auditDBEntity->setCronID($cronDBEntity->getID());
+            $auditDBEntity->setCronID($cronMapEntity->getID());
             $auditDBEntity->setDuration($cronEntity->getTimeTaken());
             $auditDBEntity->setResponse($cronEntity->getResponse());
             $auditDBEntity->setSuccessful(!$cronEntity->hasFailed());
@@ -56,7 +55,7 @@ final class CronService
         );
 
         if (count($erroredCrons) > 0) {
-            self::emailCronFailed($erroredCrons);
+            self::errorCronFailed($erroredCrons);
         }
     }
 
@@ -91,11 +90,8 @@ final class CronService
         return $cronEntity;
     }
 
-    private function emailCronFailed (array $cronAuditIDs): void
+    private static function errorCronFailed (array $cronAuditIDs): void
     {
-        Mail::sendDev(
-            "Cron Audit IDs: <" . implode(", ", $cronAuditIDs) . ">",
-            "API Bank - Cron Failed"
-        );
+        Error::save("Cron Audit IDs failed: <" . implode(", ", $cronAuditIDs) . ">");
     }
 }

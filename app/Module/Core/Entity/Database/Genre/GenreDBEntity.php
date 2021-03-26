@@ -13,6 +13,10 @@ final class GenreDBEntity extends ADBEntity
         "genre_text" => [
             "get" => "getText",
             "set" => "setText"
+        ],
+        "genre_standardised" => [
+            "get" => "getStandardised",
+            "set" => "setStandardised"
         ]
     ];
 

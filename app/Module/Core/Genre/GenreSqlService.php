@@ -5,7 +5,7 @@ namespace App\Module\Core\Genre;
 use App\Module\Core\Entity\Database\Genre\GenreDBCollectionEntity;
 use App\Module\Core\Entity\Database\Genre\GenreDBEntity;
 use App\Module\Core\Genre\Entity\GenreMapEntity;
-use App\Module\Core\Genre\Repsository\GenreRepository;
+use App\Module\Core\Genre\Repository\GenreRepository;
 
 final class GenreSqlService
 {

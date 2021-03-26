@@ -53,7 +53,7 @@ final class TitleType extends AMigration
         );
 
         $table->addColumn(
-            "title_type_const",
+            "title_type_standardised",
             "string",
             [
                 "after"  => "title_type_text",
@@ -70,49 +70,49 @@ final class TitleType extends AMigration
         $this->table("title_type")
             ->insert([
                 [
-                    "title_type_id"    => 1,
-                    "title_type_text"  => "Short",
-                    "title_type_const" => "SHORT"
+                    "title_type_id"           => 1,
+                    "title_type_text"         => "Short",
+                    "title_type_standardised" => "SHORT"
                 ],
                 [
-                    "title_type_id"    => 2,
-                    "title_type_text"  => "Movie",
-                    "title_type_const" => "MOVIE"
+                    "title_type_id"           => 2,
+                    "title_type_text"         => "Movie",
+                    "title_type_standardised" => "MOVIE"
                 ],
                 [
-                    "title_type_id"    => 3,
-                    "title_type_text"  => "TV Short",
-                    "title_type_const" => "TV_SHORT"
+                    "title_type_id"           => 3,
+                    "title_type_text"         => "TV Short",
+                    "title_type_standardised" => "TV_SHORT"
                 ],
                 [
-                    "title_type_id"    => 4,
-                    "title_type_text"  => "TV Movie",
-                    "title_type_const" => "TV_MOVIE"
+                    "title_type_id"           => 4,
+                    "title_type_text"         => "TV Movie",
+                    "title_type_standardised" => "TV_MOVIE"
                 ],
                 [
-                    "title_type_id"    => 5,
-                    "title_type_text"  => "TV Series",
-                    "title_type_const" => "TV_SERIES"
+                    "title_type_id"           => 5,
+                    "title_type_text"         => "TV Series",
+                    "title_type_standardised" => "TV_SERIES"
                 ],
                 [
-                    "title_type_id"    => 6,
-                    "title_type_text"  => "TV Episode",
-                    "title_type_const" => "TV_EPISODE"
+                    "title_type_id"           => 6,
+                    "title_type_text"         => "TV Episode",
+                    "title_type_standardised" => "TV_EPISODE"
                 ],
                 [
-                    "title_type_id"    => 7,
-                    "title_type_text"  => "TV Mini Series",
-                    "title_type_const" => "TV_MINI_SERIES"
+                    "title_type_id"           => 7,
+                    "title_type_text"         => "TV Mini Series",
+                    "title_type_standardised" => "TV_MINI_SERIES"
                 ],
                 [
-                    "title_type_id"    => 8,
-                    "title_type_text"  => "TV Special",
-                    "title_type_const" => "TV_SPECIAL"
+                    "title_type_id"           => 8,
+                    "title_type_text"         => "TV Special",
+                    "title_type_standardised" => "TV_SPECIAL"
                 ],
                 [
-                    "title_type_id"    => 9,
-                    "title_type_text"  => "Video",
-                    "title_type_const" => "VIDEO"
+                    "title_type_id"           => 9,
+                    "title_type_text"         => "Video",
+                    "title_type_standardised" => "VIDEO"
                 ]
             ])
             ->save();

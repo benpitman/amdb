@@ -23,23 +23,27 @@ final class TitleMapEntity extends AMapEntity
      */
     private $original;
     /**
+     * @var string|null
+     */
+    private $description;
+    /**
      * @var bool
      */
     private $isAdult;
     /**
-     * @var int
+     * @var int|null
      */
     private $startYear;
     /**
-     * @var int
+     * @var int|null
      */
     private $endYear;
     /**
-     * @var int
+     * @var int|null
      */
     private $runtime;
     /**
-     * @var string
+     * @var string|null
      */
     private $genres;
 
@@ -65,6 +69,11 @@ final class TitleMapEntity extends AMapEntity
     public function setOriginal(string $original): void
     {
         $this->original = $original;
+    }
+
+    public function setDescription(string $description): void
+    {
+        $this->description = $description;
     }
 
     public function setIsAdult(bool $isAdult): void
@@ -116,27 +125,32 @@ final class TitleMapEntity extends AMapEntity
         return $this->original;
     }
 
-    public function getIsAdult(): bool
+    public function getDescription(): ?string
     {
-        return $this->isAdult;
+        return $this->description;
     }
 
-    public function getStartYear(): int
+    public function getIsAdult(): bool
+    {
+        return !!$this->isAdult;
+    }
+
+    public function getStartYear(): ?int
     {
         return $this->startYear;
     }
 
-    public function getEndYear(): int
+    public function getEndYear(): ?int
     {
         return $this->endYear;
     }
 
-    public function getRuntime(): int
+    public function getRuntime(): ?int
     {
         return $this->runtime;
     }
 
-    public function getGenres(): string
+    public function getGenres(): ?string
     {
         return $this->genres;
     }

@@ -15,11 +15,16 @@ final class TitleTypeCollectionEntity extends ACollectionEntity
     {
         /** @var TitleTypeMapEntity */
         foreach ($this->iterateEntities() as $titleTypeMapEntity) {
-            if ($titleTypeMapEntity->getText() === strtoupper($text)) {
+            if ($titleTypeMapEntity->getStandardised() === $this->standardise($text)) {
                 return $titleTypeMapEntity->getID();
             }
         }
 
         return null;
+    }
+
+    private function standardise (string $text): string
+    {
+        return strtoupper(str_replace(" ", "_", preg_replace("/[^[:alpha:] ]/", "", $text)));
     }
 }

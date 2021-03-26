@@ -1,14 +1,12 @@
 <?php
 
-$abstractMigration = "Kentron\\Facade\\Phinx\\Template";
-
 $migrationPath = "app/Core/Migration";
 
 return [
 
     "paths" => [
         "migrations" => [
-            $abstractMigration => "%%PHINX_CONFIG_DIR%%/$migrationPath"
+            "%%PHINX_CONFIG_DIR%%/app/Core/Migration"
         ]
     ],
 

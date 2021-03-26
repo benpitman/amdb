@@ -13,10 +13,6 @@ final class CronDBEntity extends ADBEntity
     protected $dateDeletedColumn = "system_cron_date_deleted";
 
     protected $propertyMap = [
-        "system_cron_provider_id" => [
-            "get" => "getProviderID",
-            "set" => "setProviderID"
-        ],
         "system_cron_class" => [
             "get" => "getClass",
             "set" => "setClass"

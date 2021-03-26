@@ -2,6 +2,7 @@
 
 namespace App\Module\Core\System\Cron\Factory;
 
+use App\Module\Core\System\Cron\Controller\ImdbController;
 use App\Module\Core\System\Cron\Template\{ICronFactory, ACronController};
 
 use App\Module\Core\System\Cron\Entity\CronMapEntity;
@@ -13,5 +14,10 @@ final class CronFactory implements ICronFactory
         $methodName = "get" . $cronMapEntity->getClass() . "Controller";
 
         return self::$methodName();
+    }
+
+    private static function getImdbController(): ImdbController
+    {
+        return new ImdbController();
     }
 }

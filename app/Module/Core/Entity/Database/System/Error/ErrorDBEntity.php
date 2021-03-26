@@ -12,9 +12,9 @@ final class ErrorDBEntity extends ADBEntity
     protected $dateCreatedColumn = "system_error_date_created";
 
     protected $propertyMap = [
-        "system_error_audit_id" => [
-            "get" => "getAuditID",
-            "set" => "setAuditID"
+        "system_error_system_audit_id" => [
+            "get" => "getSystemAuditID",
+            "set" => "setSystemAuditID"
         ],
         "system_error_text" => [
             "get" => "getText",

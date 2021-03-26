@@ -8,6 +8,7 @@ use Illuminate\Database\Capsule\Manager as Capsule;
 
 define("ROOT_DIR", realpath(__DIR__ . "/../../.."));
 define("APP_DIR", ROOT_DIR . "/app");
+define("STORAGE_DIR", ROOT_DIR . "/storage");
 
 // include the composer autoloader
 include ROOT_DIR . "/vendor/autoload.php";

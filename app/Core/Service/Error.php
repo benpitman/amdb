@@ -33,7 +33,7 @@ final class Error
         /** @var ErrorMapEntity|ErrorDBEntity */
         $errorDBEntity = new ErrorDBEntity();
 
-        $errorDBEntity->setAuditID(Variable::getAuditID());
+        $errorDBEntity->getSystemAuditID(Variable::getAuditID());
         $errorDBEntity->setText(json_encode($error));
 
         self::saveEntity($errorDBEntity);

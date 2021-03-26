@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Module\Core\Genre\Repsository;
+namespace App\Module\Core\Genre\Repository;
 
 use Kentron\Template\ARepository;
 

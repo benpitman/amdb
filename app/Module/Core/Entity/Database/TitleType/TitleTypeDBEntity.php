@@ -13,6 +13,10 @@ final class TitleTypeDBEntity extends ADBEntity
         "title_type_text" => [
             "get" => "getText",
             "set" => "setText"
+        ],
+        "title_type_standardised" => [
+            "get" => "getStandardised",
+            "set" => "setStandardised"
         ]
     ];
 

@@ -7,7 +7,6 @@ use Kentron\Facade\DT;
 
 final class CronMapEntity extends AMapEntity
 {
-    private $providerID;
     private $class;
     private $method;
     private $args;
@@ -17,11 +16,6 @@ final class CronMapEntity extends AMapEntity
     /**
      * Getters
      */
-
-    public function getProviderID (): ?int
-    {
-        return $this->providerID;
-    }
 
     public function getClass (): ?string
     {
@@ -51,11 +45,6 @@ final class CronMapEntity extends AMapEntity
     /**
      * Setters
      */
-
-    public function setProviderID (?int $providerID): void
-    {
-        $this->providerID = $providerID;
-    }
 
     public function setClass (?string $class): void
     {

@@ -3,7 +3,7 @@
 namespace App\Module\Core\TitleType;
 
 use App\Module\Core\Entity\Database\TitleType\TitleTypeDBCollectionEntity;
-use App\Module\Core\TitleType\Repsository\TitleTypeRepository;
+use App\Module\Core\TitleType\Repository\TitleTypeRepository;
 
 final class TitleTypeSqlService
 {

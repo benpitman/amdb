@@ -15,11 +15,16 @@ final class GenreCollectionEntity extends ACollectionEntity
     {
         /** @var GenreMapEntity */
         foreach ($this->iterateEntities() as $genreMapEntity) {
-            if ($genreMapEntity->getText() === strtoupper($text)) {
+            if ($genreMapEntity->getStandardised() === $this->standardise($text)) {
                 return $genreMapEntity->getID();
             }
         }
 
         return null;
+    }
+
+    private function standardise (string $text): string
+    {
+        return strtoupper(str_replace(" ", "_", preg_replace("/[^[:alpha:] ]/", "", $text)));
     }
 }

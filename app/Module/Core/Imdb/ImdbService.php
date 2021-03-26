@@ -4,41 +4,22 @@ namespace App\Module\Core\Imdb;
 
 use App\Core\Service\Error;
 use App\Core\Store\Imdb;
-use App\Module\Core\Entity\Database\Package\PackageDBCollectionEntity;
 use App\Module\Core\Imdb\Entity\ImdbEntity;
-use App\Module\Core\Package\Entity\PackageMapEntity;
 use App\Module\Core\Title\TitleSqlService;
 use Kentron\Service\File;
+use App\Module\Core\Imdb\Template\ADataset;
 
 final class ImdbService
 {
-    public function downloadPackages(PackageDBCollectionEntity $packageDBCollectionEntity): ImdbEntity
-    {
-        $rootImdbEntity = new ImdbEntity();
-
-        /** @var PackageMapEntity */
-        foreach ($packageDBCollectionEntity->iterateEntities() as $packageMapEntity) {
-            $imdbEntity = $this->downloadPackage($packageMapEntity);
-
-            if ($imdbEntity->hasErrors()) {
-                $rootImdbEntity->mergeAlerts($imdbEntity);
-                break;
-            }
-        }
-
-        return $rootImdbEntity;
-    }
-
-    public function downloadPackage(PackageMapEntity $packageMapEntity): ImdbEntity
+    public function downloadPackage(ADataset $dataset): ImdbEntity
     {
         $imdbEntity = new ImdbEntity();
-        $datasetClass = $packageMapEntity->getNewClass();
 
-        if (!$datasetClass->run()) {
-            $imdbEntity->mergeAlerts($datasetClass);
+        if (!$dataset->download()) {
+            $imdbEntity->mergeAlerts($dataset);
         }
 
-        TitleSqlService::bulkInsert($datasetClass->getTsvPath());
+        TitleSqlService::bulkInsert($dataset->getTsvPath());
 
         return $imdbEntity;
     }
