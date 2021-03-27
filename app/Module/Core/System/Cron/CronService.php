@@ -12,6 +12,7 @@ use App\Module\Core\Entity\Database\System\Cron\CronAuditDBCollectionEntity;
 use App\Module\Core\System\Cron\Factory\CronFactory;
 
 use App\Module\Core\System\Cron\CronAuditSqlService;
+use Kentron\Template\AAlert;
 
 final class CronService
 {
@@ -75,13 +76,16 @@ final class CronService
 
         $method = $cronMapEntity->getMethod();
         try {
-            $cronService->$method(...$cronMapEntity->getArgs());
+            $entity = $cronService->$method(...$cronMapEntity->getArgs());
         }
         catch (\Exception $ex) {
             $cronEntity->setException($ex);
             return $cronEntity;
         }
         finally {
+            if (isset($entity) && is_subclass_of($entity, AAlert::class)) {
+                $cronEntity->addError($entity->getErrors());
+            }
             $cronEntity->end();
         }
 

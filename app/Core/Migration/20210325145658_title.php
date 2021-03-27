@@ -73,10 +73,21 @@ final class Title extends AMigration
         );
 
         $table->addColumn(
-            "title_primary",
+            "title_genres",
             "string",
             [
                 "after"   => "title_title_type_id",
+                "length"  => 127,
+                "null"    => true,
+                "default" => null
+            ]
+        );
+
+        $table->addColumn(
+            "title_primary",
+            "string",
+            [
+                "after"   => "title_genres",
                 "length"  => 511,
                 "null"    => true,
                 "default" => null
@@ -104,11 +115,35 @@ final class Title extends AMigration
         );
 
         $table->addColumn(
-            "title_is_adult",
-            "boolean",
+            "title_runtime",
+            "integer",
             [
-                "after" => "title_description",
-                "null"  => false
+                "after"   => "title_description",
+                "length"  => 3,
+                "null"    => true,
+                "default" => null
+            ]
+        );
+
+        $table->addColumn(
+            "title_rating",
+            "float",
+            [
+                "after"   => "title_runtime",
+                "length"  => 7,
+                "null"    => true,
+                "default" => null
+            ]
+        );
+
+        $table->addColumn(
+            "title_votes",
+            "integer",
+            [
+                "after"   => "title_rating",
+                "length"  => 7,
+                "null"    => true,
+                "default" => null
             ]
         );
 
@@ -116,7 +151,7 @@ final class Title extends AMigration
             "title_start_year",
             "integer",
             [
-                "after"   => "title_is_adult",
+                "after"   => "title_votes",
                 "length"  => 4,
                 "null"    => true,
                 "default" => null
@@ -134,28 +169,10 @@ final class Title extends AMigration
             ]
         );
 
-        $table->addColumn(
-            "title_runtime",
-            "integer",
-            [
-                "after"   => "title_end_year",
-                "length"  => 3,
-                "null"    => true,
-                "default" => null
-            ]
-        );
-
-        $table->addColumn(
-            "title_genres",
-            "string",
-            [
-                "after"   => "title_runtime",
-                "length"  => 127,
-                "null"    => true,
-                "default" => null
-            ]
-        );
-
         $table->save();
+
+        $this->execute(
+            "CREATE FULLTEXT INDEX title_primary_original_IDX ON `amdb-dev`.title (title_primary,title_original);"
+        );
     }
 }

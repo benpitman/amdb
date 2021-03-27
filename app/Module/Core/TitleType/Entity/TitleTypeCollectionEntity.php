@@ -25,6 +25,6 @@ final class TitleTypeCollectionEntity extends ACollectionEntity
 
     private function standardise (string $text): string
     {
-        return strtoupper(str_replace(" ", "_", preg_replace("/[^[:alpha:] ]/", "", $text)));
+        return strtoupper(str_replace([" ", "-"], "_", preg_replace("/[^[:alpha:][ -]]/", "", $text)));
     }
 }

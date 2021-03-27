@@ -24,25 +24,12 @@ final class TitleSqlService
             $titleRepository->whereDateCreatedLessThan($dateTo);
         }
 
-        if ($searchEntity->searchBoundaries()) {
-            $titleRepository->setBoundaries();
-        }
-        if ($searchEntity->searchSensitive()) {
-            $titleRepository->setSensitive();
+        foreach ($searchEntity->iterateQueries() as $query) {
+            $titleRepository->whereTitle($query);
         }
 
-        if ($searchEntity->hasSearchText()) {
-            if ($searchEntity->searchInTitle()) {
-                $titleRepository->whereTitle($searchEntity->getSearchText());
-
-                if ($searchEntity->searchInDescription()) {
-                    $titleRepository->orWhereDescription($searchEntity->getSearchText());
-                }
-            }
-            else if ($searchEntity->searchInDescription()) {
-                $titleRepository->whereDescription($searchEntity->getSearchText());
-            }
-        }
+        $titleRepository->limit($searchEntity->getLimit());
+        $titleRepository->offset($searchEntity->getOffset());
 
         $titleRepository->buildAll($titleDBCollectionEntity);
 
@@ -51,7 +38,7 @@ final class TitleSqlService
 
     public static function bulkInsert(string $tsvPath): void
     {
-        Manager::raw("LOAD DATA LOCAL INFILE '$tsvPath' INTO TABLE \`title\` FIELDS TERMINATED BY '\\t' LINES TERMINATED BY '\\n'");
+        Manager::connection()->statement("LOAD DATA LOCAL INFILE '$tsvPath' INTO TABLE `title` FIELDS TERMINATED BY '\\t' LINES TERMINATED BY '\\n'");
     }
 
     public static function updateDescription(string $imdbId, string $description): void

@@ -12,6 +12,12 @@
             "type"    : ["string","null"],
             "pattern" : "^[0-9]{4}(-[0-9]{2}){2}( [0-9]{2}(:[0-9]{2}){2})?$"
         },
+        "booleanDef": {
+            "type"    : ["integer", "string"],
+            "minimum" : 0,
+            "maximum": 1,
+            "pattern" : "^[01]$"
+        },
         "integerUnsignedDef" : {
             "type"    : "integer",
             "minimum" : 0

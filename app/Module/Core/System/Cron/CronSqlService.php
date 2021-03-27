@@ -2,6 +2,7 @@
 
 namespace App\Module\Core\System\Cron;
 
+use App\Core\Store\Variable\Variable;
 use Kentron\Facade\DT;
 use App\Module\Core\System\Cron\Repository\CronRepository;
 
@@ -24,7 +25,7 @@ final class CronSqlService
         $cronRepository = new CronRepository();
 
         $cronRepository->whereID($cronID);
-        $cronRepository->updateDateRan(DT::now()->format());
+        $cronRepository->updateDateRan(DT::now()->format(Variable::getDefaultDateTimeFormat()));
 
         $cronRepository->runUpdate();
     }

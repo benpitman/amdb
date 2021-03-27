@@ -56,9 +56,4 @@ final class TitleDBEntity extends ADBEntity
     {
         parent::__construct(new TitleMapEntity());
     }
-
-    public function getColumns(): array
-    {
-        return array_keys($this->propertyMap);
-    }
 }

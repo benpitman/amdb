@@ -108,11 +108,6 @@ final class TitleType extends AMigration
                     "title_type_id"           => 8,
                     "title_type_text"         => "TV Special",
                     "title_type_standardised" => "TV_SPECIAL"
-                ],
-                [
-                    "title_type_id"           => 9,
-                    "title_type_text"         => "Video",
-                    "title_type_standardised" => "VIDEO"
                 ]
             ])
             ->save();

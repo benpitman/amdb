@@ -19,7 +19,9 @@ final class ImdbService
             $imdbEntity->mergeAlerts($dataset);
         }
 
-        TitleSqlService::bulkInsert($dataset->getTsvPath());
+        // if ($dataset->getUpload()) {
+        //     TitleSqlService::bulkInsert($dataset->getTsvPath());
+        // }
 
         return $imdbEntity;
     }

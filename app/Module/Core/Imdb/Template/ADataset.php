@@ -12,32 +12,28 @@ abstract class ADataset extends AAlert
     /**
      * @var string
      */
-    protected $filename;
+    protected $gzPath;
+    /**
+     * @var string
+     */
+    protected $rawPath;
     /**
      * @var string
      */
     protected $tsvPath;
+    /**
+     * @var bool
+     */
+    protected $upload;
 
     /**
      * @var string
      */
     private $url;
-    /**
-     * @var string
-     */
-    private $gzPath;
-    /**
-     * @var string
-     */
-    private $rawPath;
 
     public function __construct(string $uri)
     {
         $this->url = Imdb::DATASET_URL . $uri;
-
-        $this->gzPath = STORAGE_DIR . "/{$this->filename}.gz";
-        $this->rawPath = STORAGE_DIR . "/{$this->filename}.raw.tsv";
-        $this->tsvPath = STORAGE_DIR . "/{$this->filename}.tsv";
     }
 
     /**
@@ -50,9 +46,14 @@ abstract class ADataset extends AAlert
      * Getters
      */
 
-    public function getTsvPath(): string
+    final public function getTsvPath(): string
     {
         return $this->tsvPath;
+    }
+
+    final public function getUpload(): bool
+    {
+        return $this->upload;
     }
 
     /**
