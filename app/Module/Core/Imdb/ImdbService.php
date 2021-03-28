@@ -5,7 +5,6 @@ namespace App\Module\Core\Imdb;
 use App\Core\Service\Error;
 use App\Core\Store\Imdb;
 use App\Module\Core\Imdb\Entity\ImdbEntity;
-use App\Module\Core\Title\TitleSqlService;
 use Kentron\Service\File;
 use App\Module\Core\Imdb\Template\ADataset;
 
@@ -15,13 +14,11 @@ final class ImdbService
     {
         $imdbEntity = new ImdbEntity();
 
-        if (!$dataset->download()) {
+        $dataset->download();
+
+        if ($dataset->hasErrors()) {
             $imdbEntity->mergeAlerts($dataset);
         }
-
-        // if ($dataset->getUpload()) {
-        //     TitleSqlService::bulkInsert($dataset->getTsvPath());
-        // }
 
         return $imdbEntity;
     }

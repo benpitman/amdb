@@ -33,19 +33,15 @@ final class Title extends AMigration
         $table = $this->table(
             "title",
             [
-                "id"     => "title_id",
-                "length" => 11,
-                "null"   => false,
-                "signed" => false
+                "id"          => false,
+                "primary_key" => "title_imdb_id"
             ]
         );
-        $table->addIndex("title_id", ["unique" => true]);
 
         $table->addColumn(
             "title_imdb_id",
             "string",
             [
-                "after"  => "title_id",
                 "length" => 15,
                 "null"   => false
             ]
@@ -126,32 +122,10 @@ final class Title extends AMigration
         );
 
         $table->addColumn(
-            "title_rating",
-            "float",
-            [
-                "after"   => "title_runtime",
-                "length"  => 7,
-                "null"    => true,
-                "default" => null
-            ]
-        );
-
-        $table->addColumn(
-            "title_votes",
-            "integer",
-            [
-                "after"   => "title_rating",
-                "length"  => 7,
-                "null"    => true,
-                "default" => null
-            ]
-        );
-
-        $table->addColumn(
             "title_start_year",
             "integer",
             [
-                "after"   => "title_votes",
+                "after"   => "title_runtime",
                 "length"  => 4,
                 "null"    => true,
                 "default" => null

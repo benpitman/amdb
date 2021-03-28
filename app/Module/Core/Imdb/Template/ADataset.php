@@ -21,10 +21,6 @@ abstract class ADataset extends AAlert
      * @var string
      */
     protected $tsvPath;
-    /**
-     * @var bool
-     */
-    protected $upload;
 
     /**
      * @var string
@@ -41,20 +37,7 @@ abstract class ADataset extends AAlert
      */
 
     abstract protected function process($rawFileHandle): void;
-
-    /**
-     * Getters
-     */
-
-    final public function getTsvPath(): string
-    {
-        return $this->tsvPath;
-    }
-
-    final public function getUpload(): bool
-    {
-        return $this->upload;
-    }
+    abstract protected function insert(): void;
 
     /**
      * Helpers
@@ -63,12 +46,10 @@ abstract class ADataset extends AAlert
     /**
      * Download the gzipped dataset
      *
-     * @return boolean
+     * @return void
      */
-    public function download(): bool
+    public function download(): void
     {
-        $this->process(fopen($this->rawPath, "r"));
-        return true;
         $curl = new Curl();
         $fileHandle = fopen($this->gzPath, "w");
 
@@ -86,13 +67,13 @@ abstract class ADataset extends AAlert
             $this->addError($curl->getErrors());
             fclose($fileHandle);
 
-            return false;
+            return;
         }
 
         fclose($fileHandle);
-        $this->uncompress();
 
-        return true;
+        $this->uncompress();
+        $this->insert();
     }
 
     /**

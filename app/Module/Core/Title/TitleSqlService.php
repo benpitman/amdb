@@ -36,9 +36,11 @@ final class TitleSqlService
         return $titleDBCollectionEntity;
     }
 
-    public static function bulkInsert(string $tsvPath): void
+    public static function bulkInsert(string $tsvPath): bool
     {
-        Manager::connection()->statement("LOAD DATA LOCAL INFILE '$tsvPath' INTO TABLE `title` FIELDS TERMINATED BY '\\t' LINES TERMINATED BY '\\n'");
+        return Manager::connection()->statement(
+            "LOAD DATA LOCAL INFILE '$tsvPath' INTO TABLE `title` FIELDS TERMINATED BY '\\t' LINES TERMINATED BY '\\n'"
+        );
     }
 
     public static function updateDescription(string $imdbId, string $description): void

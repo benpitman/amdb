@@ -3,6 +3,7 @@
 namespace App\Module\Core\Imdb\Dataset;
 
 use App\Module\Core\Imdb\Template\ADataset;
+use App\Module\Core\Rating\RatingSqlService;
 
 final class Rating extends ADataset
 {
@@ -14,9 +15,6 @@ final class Rating extends ADataset
 
         $this->gzPath = STORAGE_DIR . "/" . $this::FILE_NAME . ".gz";
         $this->rawPath = STORAGE_DIR . "/" . $this::FILE_NAME . ".tsv";
-        $this->tsvPath =  $this->rawPath;
-
-        $this->upload = false;
     }
 
     /**
@@ -28,7 +26,14 @@ final class Rating extends ADataset
      */
     protected function process($rawFileHandle): void
     {
-        // Dont process this file here
+        // No need to process this file
+    }
+
+    protected function insert(): void
+    {
+        if (RatingSqlService::bulkInsert($this->rawPath)) {
+            $this->addError("Failed to insert rating data to database");
+        }
     }
 
 }
