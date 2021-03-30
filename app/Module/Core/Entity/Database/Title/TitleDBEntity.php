@@ -7,8 +7,6 @@ use Kentron\Entity\Template\ADBEntity;
 
 final class TitleDBEntity extends ADBEntity
 {
-    protected $primaryIDColumn = "title_id";
-
     protected $propertyMap = [
         "title_imdb_id" => [
             "get" => "getImdbId",
@@ -30,9 +28,9 @@ final class TitleDBEntity extends ADBEntity
             "get" => "getDescription",
             "set" => "setDescription"
         ],
-        "title_is_adult" => [
-            "get" => "getIsAdult",
-            "set" => "setIsAdult"
+        "title_runtime" => [
+            "get" => "getRuntime",
+            "set" => "setRuntime"
         ],
         "title_start_year" => [
             "get" => "getStartYear",
@@ -41,14 +39,6 @@ final class TitleDBEntity extends ADBEntity
         "title_end_year" => [
             "get" => "getEndYear",
             "set" => "setEndYear"
-        ],
-        "title_runtime" => [
-            "get" => "getRuntime",
-            "set" => "setRuntime"
-        ],
-        "title_genres" => [
-            "get" => "getGenres",
-            "set" => "setGenres"
         ]
     ];
 

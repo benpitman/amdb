@@ -3,7 +3,10 @@
     "additionalProperties": false,
 
     "properties": {
-        "q": {"$ref": "#/definitions/stringDef"}
+        "q": {"$ref": "#/definitions/stringDef"},
+        "l": {"$ref": "#/definitions/stringDef"},
+        "p": {"$ref": "#/definitions/stringDef"},
+        "t": {"$ref": "#/definitions/stringDef"}
     },
 
     "required": [

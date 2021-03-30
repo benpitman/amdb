@@ -5,6 +5,7 @@ namespace App\Module\Core\Title;
 use App\Module\Api\Entity\SearchEntity;
 use App\Module\Core\Entity\Database\Title\TitleDBCollectionEntity;
 use App\Module\Core\Title\Repository\TitleRepository;
+use App\Module\Core\TitleType\TitleTypeSqlService;
 use Illuminate\Database\Capsule\Manager;
 
 final class TitleSqlService
@@ -26,6 +27,11 @@ final class TitleSqlService
 
         foreach ($searchEntity->iterateQueries() as $query) {
             $titleRepository->whereTitle($query);
+        }
+
+        $titleTypeId = $searchEntity->getType();
+        if (is_int($titleTypeId) && TitleTypeSqlService::isValidId($titleTypeId)) {
+            $titleRepository->whereTitleType($titleTypeId);
         }
 
         $titleRepository->limit($searchEntity->getLimit());

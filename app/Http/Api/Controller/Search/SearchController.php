@@ -5,6 +5,7 @@ namespace App\Http\Api\Controller\Search;
 use App\Http\Api\Controller\AApiController;
 use App\Http\Api\Schema\SchemaFactory;
 use App\Module\Api\Entity\SearchEntity;
+use App\Module\Api\Title\TitleService;
 use App\Module\Core\Title\TitleSqlService;
 
 final class SearchController extends AApiController
@@ -26,8 +27,8 @@ final class SearchController extends AApiController
 
         $searchEntity->build($extracted);
 
-        $titleDBCollectionEntity = TitleSqlService::search($searchEntity);
+        $searchReponseEntity = TitleService::search($searchEntity);
 
-        $this->transportEntity->setData($titleDBCollectionEntity->normalise());
+        $this->transportEntity->setData($searchReponseEntity->getTitleApiCollectionEntity()->normalise());
     }
 }

@@ -2,7 +2,7 @@
 
 use Kentron\Facade\Phinx\Template\AMigration;
 
-final class Poster extends AMigration
+final class TitleGenre extends AMigration
 {
     /**
      * Migrate method
@@ -11,7 +11,7 @@ final class Poster extends AMigration
      */
     public function up (): void
     {
-        $this->createPoster();
+        $this->createTitleGenre();
     }
 
     /**
@@ -21,34 +21,34 @@ final class Poster extends AMigration
      */
     public function down (): void
     {
-        $this->table("poster")->drop()->save();
+        $this->table("title_genre")->drop()->save();
     }
 
     /**
      * Private methods
      */
 
-    private function createPoster(): void
+    private function createTitleGenre(): void
     {
         $table = $this->table(
-            "poster",
+            "title_genre",
             [
                 "id"          => false,
-                "primary_key" => "poster_imdb_id"
+                "primary_key" => "title_genre_imdb_id"
             ]
         );
 
         $table->addColumn(
-            "poster_imdb_id",
+            "title_genre_imdb_id",
             "string",
             [
                 "length" => 15,
                 "null"   => false
             ]
         );
-        $table->addIndex("poster_imdb_id", ["unique" => true]);
+        $table->addIndex("title_genre_imdb_id", ["unique" => true]);
         $table->addForeignKey(
-            "poster_imdb_id",
+            "title_genre_imdb_id",
             "title",
             "title_imdb_id",
             [
@@ -58,26 +58,25 @@ final class Poster extends AMigration
         );
 
         $table->addColumn(
-            "poster_small",
-            "string",
+            "title_genre_genre_id",
+            "integer",
             [
-                "after"   => "poster_imdb_id",
-                "length"  => 255,
-                "null"    => true,
-                "default" => null
+                "after"  => "title_genre_imdb_id",
+                "length" => 11,
+                "signed" => false,
+                "null"   => false
             ]
         );
-
-        $table->addColumn(
-            "poster_full",
-            "string",
+        $table->addForeignKey(
+            "title_genre_genre_id",
+            "genre",
+            "genre_id",
             [
-                "after"   => "poster_small",
-                "length"  => 255,
-                "null"    => true,
-                "default" => null
+                "delete" => "RESTRICT",
+                "update" => "RESTRICT"
             ]
         );
+        $table->addIndex(["title_genre_imdb_id", "title_genre_genre_id"], ["unique" => true]);
 
         $table->save();
     }

@@ -15,11 +15,12 @@ final class Title extends ADataset
 {
     private const FILE_NAME = "title";
 
+    private $fileIndex = 0;
+
     public function __construct()
     {
         $this->gzPath = STORAGE_DIR . "/" . $this::FILE_NAME . ".gz";
         $this->rawPath = STORAGE_DIR . "/" . $this::FILE_NAME . ".raw.tsv";
-        $this->tsvPath = STORAGE_DIR . "/" . $this::FILE_NAME . ".tsv";
 
         parent::__construct("title.basics.tsv.gz");
     }
@@ -33,7 +34,8 @@ final class Title extends ADataset
      */
     protected function process($rawFileHandle): void
     {
-        $tsvFileHandle = fopen($this->tsvPath, "w+");
+        $tsvFileHandle = fopen($this->getTsvPath(), "w+");
+        $genreTsvHandle = fopen(STORAGE_DIR . "/title_genres.tsv", "w+");
 
         /** @var TitleTypeCollectionEntity */
         $titleTypeCollectionEntity = TitleTypeSqlService::getAll()->getRootEntity();
@@ -42,6 +44,7 @@ final class Title extends ADataset
 
         rewind($rawFileHandle);
         $line = fgets($rawFileHandle); // Ignore first line
+        $count = 0;
 
         while (!feof($rawFileHandle)) {
             $line = stream_get_line($rawFileHandle, 0, PHP_EOL);
@@ -70,10 +73,9 @@ final class Title extends ADataset
                 continue;
             }
 
-            // If genres is null
+            // If genres is not null
             if ($columns[8] !== "\\N") {
                 // Convert string genres to constant IDs
-                $genres = [];
                 foreach (explode(",", $columns[8]) as $genre) {
                     $genreId = $genreCollectionEntity->getIdByText($genre);
 
@@ -85,22 +87,38 @@ final class Title extends ADataset
                         continue 2;
                     }
 
-                    $genres[] = $genreId;
+                    fwrite($genreTsvHandle, "{$columns[0]}\t{$genreId}" . PHP_EOL);
                 }
-                $columns[8] = json_encode($genres);
             }
 
             fwrite($tsvFileHandle, implode("\t", $this->formatColumns($columns)) . PHP_EOL);
+
+            if ($count++ === 500_000) {
+                fclose($tsvFileHandle);
+                $this->fileIndex++;
+                $count = 0;
+                $tsvFileHandle = fopen($this->getTsvPath(), "w+");
+            }
         }
 
         fclose($tsvFileHandle);
+        fclose($genreTsvHandle);
     }
 
     protected function insert(): void
     {
-        if (TitleSqlService::bulkInsert($this->tsvPath)) {
-            $this->addError("Failed to insert title data to database");
+        for ($fileIndex = 0; $fileIndex <= $this->fileIndex; $fileIndex++) {
+            $tsvPath = $this->getTsvPath($fileIndex);
+            if (TitleSqlService::bulkInsert($tsvPath)) {
+                $this->addError("Failed to insert title data to database");
+            }
+            unlink($tsvPath);
         }
+    }
+
+    private function getTsvPath(int $fileIndex = null): string
+    {
+        return STORAGE_DIR . "/" . $this::FILE_NAME . "_" . ($fileIndex ?? $this->fileIndex) . ".tsv";
     }
 
     /**
@@ -115,7 +133,6 @@ final class Title extends ADataset
         return [
             $columns[0], // const
             $columns[1], // type
-            $columns[8], // genres
             $columns[2], // primary
             $columns[3], // original
             "\\N", // description

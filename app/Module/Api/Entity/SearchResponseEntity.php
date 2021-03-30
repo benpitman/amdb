@@ -2,116 +2,23 @@
 
 namespace App\Module\Api\Entity;
 
-use Kentron\Entity\Template\AApiEntity;
-use Kentron\Facade\DT;
+use App\Module\Api\Entity\Title\TitleApiCollectionEntity;
+use Kentron\Entity\Template\AEntity;
 
-final class SearchEntity extends AApiEntity
+final class SearchResponseEntity extends AEntity
 {
-    protected $propertyMap = [
-        "q" => [
-            "get" => "getQuery",
-            "set" => "setQuery"
-        ],
-        "df" => [
-            "get" => "getDateFrom",
-            "set" => "setDateFrom"
-        ],
-        "dt" => [
-            "get" => "getDateTo",
-            "set" => "setDateTo"
-        ]
-    ];
-
     /**
-     * @var string
+     * @var TitleApiCollectionEntity
      */
-    private $query;
-    private $limit = 10;
-    private $page = 1;
-    private $dateFrom;
-    private $dateTo;
+    private $titleApiCollectionEntity;
 
-    /**
-     * Getters
-     */
-
-    public function getQuery(): string
+    public function setTitleApiCollectionEntity(TitleApiCollectionEntity $titleApiCollectionEntity): void
     {
-        return $this->query;
+        $this->titleApiCollectionEntity = $titleApiCollectionEntity;
     }
 
-    public function getLimit(): int
+    public function getTitleApiCollectionEntity(): TitleApiCollectionEntity
     {
-        return $this->limit;
-    }
-
-    public function getPage(): int
-    {
-        return $this->page;
-    }
-
-    public function getDateFrom(): int
-    {
-        return $this->dateFrom;
-    }
-
-    public function getDateTo(): int
-    {
-        return $this->dateTo;
-    }
-
-    public function getDTDateFrom(): ?DT
-    {
-        return $this->dateFrom ? DT::then($this->dateFrom) : null;
-    }
-
-    public function getDTDateTo(): ?DT
-    {
-        return $this->dateTo ? DT::then($this->dateTo) : null;
-    }
-
-    /**
-     * Setters
-     */
-
-    public function setQuery(string $query): void
-    {
-        $this->query = $query;
-    }
-
-    public function setLimit(int $limit): void
-    {
-        $this->limit = $limit;
-    }
-
-    public function setPage(int $page): void
-    {
-        $this->page = $page;
-    }
-
-    public function setDateFrom(int $dateFrom): void
-    {
-        $this->dateFrom = $dateFrom;
-    }
-
-    public function setDateTo(int $dateTo): void
-    {
-        $this->dateTo = $dateTo;
-    }
-
-    /**
-     * Helpers
-     */
-
-    public function iterateQueries(): iterable
-    {
-        foreach (explode(" ", $this->query) as $query) {
-            yield $query;
-        }
-    }
-
-    public function getOffset(): int
-    {
-        return $this->limit * ($this->page - 1);
+        return $this->titleApiCollectionEntity;
     }
 }

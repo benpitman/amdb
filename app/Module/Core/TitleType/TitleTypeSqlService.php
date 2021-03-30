@@ -16,4 +16,13 @@ final class TitleTypeSqlService
 
         return $titleTypeDBCollectionEntity;
     }
+
+    public static function isValidId(int $typeId): bool
+    {
+        $titleTypeRepository = new TitleTypeRepository();
+
+        $titleTypeRepository->whereId($typeId);
+
+        return !!$titleTypeRepository->first();
+    }
 }

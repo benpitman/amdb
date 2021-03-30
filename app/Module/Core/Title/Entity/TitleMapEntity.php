@@ -2,6 +2,7 @@
 
 namespace App\Module\Core\Title\Entity;
 
+use App\Module\Core\Genre\Entity\GenreCollectionEntity;
 use Kentron\Entity\Template\AMapEntity;
 
 final class TitleMapEntity extends AMapEntity
@@ -27,9 +28,9 @@ final class TitleMapEntity extends AMapEntity
      */
     private $description;
     /**
-     * @var bool
+     * @var int|null
      */
-    private $isAdult;
+    private $runtime;
     /**
      * @var int|null
      */
@@ -38,14 +39,13 @@ final class TitleMapEntity extends AMapEntity
      * @var int|null
      */
     private $endYear;
+
+    // Non-table properties
+
     /**
-     * @var int|null
+     * @var GenreCollectionEntity
      */
-    private $runtime;
-    /**
-     * @var string|null
-     */
-    private $genres;
+    private $genreCollectionEntity;
 
     /**
      * Setters
@@ -76,9 +76,9 @@ final class TitleMapEntity extends AMapEntity
         $this->description = $description;
     }
 
-    public function setIsAdult(bool $isAdult): void
+    public function setRuntime(int $runtime): void
     {
-        $this->isAdult = $isAdult;
+        $this->runtime = $runtime;
     }
 
     public function setStartYear(int $startYear): void
@@ -91,14 +91,9 @@ final class TitleMapEntity extends AMapEntity
         $this->endYear = $endYear;
     }
 
-    public function setRuntime(int $runtime): void
+    public function setGenreCollectionEntity(GenreCollectionEntity $genreCollectionEntity): void
     {
-        $this->runtime = $runtime;
-    }
-
-    public function setGenres(string $genres): void
-    {
-        $this->genres = $genres;
+        $this->genreCollectionEntity = $genreCollectionEntity;
     }
 
     /**
@@ -113,6 +108,11 @@ final class TitleMapEntity extends AMapEntity
     public function getTitleTypeId(): int
     {
         return $this->titleTypeId;
+    }
+
+    public function getGenres(): array
+    {
+        return $this->genreCollectionEntity->map(["getText"], true);
     }
 
     public function getPrimary(): ?string
@@ -130,9 +130,9 @@ final class TitleMapEntity extends AMapEntity
         return $this->description;
     }
 
-    public function getIsAdult(): bool
+    public function getRuntime(): ?int
     {
-        return !!$this->isAdult;
+        return $this->runtime;
     }
 
     public function getStartYear(): ?int
@@ -145,13 +145,8 @@ final class TitleMapEntity extends AMapEntity
         return $this->endYear;
     }
 
-    public function getRuntime(): ?int
+    public function getGenreCollectionEntity(): ?GenreCollectionEntity
     {
-        return $this->runtime;
-    }
-
-    public function getGenres(): ?string
-    {
-        return $this->genres;
+        return $this->genreCollectionEntity;
     }
 }

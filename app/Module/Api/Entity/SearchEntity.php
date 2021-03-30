@@ -12,6 +12,18 @@ final class SearchEntity extends AApiEntity
             "get" => "getQuery",
             "set" => "setQuery"
         ],
+        "l" => [
+            "get" => "getLimit",
+            "set" => "setLimit"
+        ],
+        "p" => [
+            "get" => "getPage",
+            "set" => "setPage"
+        ],
+        "t" => [
+            "get" => "getType",
+            "set" => "setType"
+        ],
         "df" => [
             "get" => "getDateFrom",
             "set" => "setDateFrom"
@@ -28,6 +40,7 @@ final class SearchEntity extends AApiEntity
     private $query;
     private $limit = 10;
     private $page = 1;
+    private $type = null;
     private $dateFrom;
     private $dateTo;
 
@@ -48,6 +61,11 @@ final class SearchEntity extends AApiEntity
     public function getPage(): int
     {
         return $this->page;
+    }
+
+    public function getType(): ?int
+    {
+        return $this->type;
     }
 
     public function getDateFrom(): int
@@ -87,6 +105,11 @@ final class SearchEntity extends AApiEntity
     public function setPage(int $page): void
     {
         $this->page = $page;
+    }
+
+    public function setType(int $type): void
+    {
+        $this->type = $type;
     }
 
     public function setDateFrom(int $dateFrom): void

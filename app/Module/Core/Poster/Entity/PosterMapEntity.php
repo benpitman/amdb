@@ -7,8 +7,8 @@ use Kentron\Entity\Template\AMapEntity;
 final class PosterMapEntity extends AMapEntity
 {
     private $imdbId;
-    private $score;
-    private $votes;
+    private $small;
+    private $full;
 
     /**
      * Getters
@@ -19,14 +19,14 @@ final class PosterMapEntity extends AMapEntity
         return $this->imdbId;
     }
 
-    public function getScore(): float
+    public function getSmall(): string
     {
-        return $this->score;
+        return $this->small;
     }
 
-    public function getVotes(): int
+    public function getFull(): string
     {
-        return $this->votes;
+        return $this->full;
     }
 
     /**
@@ -38,13 +38,13 @@ final class PosterMapEntity extends AMapEntity
         $this->imdbId = $imdbId;
     }
 
-    public function setScore(float $score): void
+    public function setSmall(string $small): void
     {
-        $this->score = $score;
+        $this->small = $small;
     }
 
-    public function setVotes(int $votes): void
+    public function setFull(string $full): void
     {
-        $this->votes = $votes;
+        $this->full = $full;
     }
 }

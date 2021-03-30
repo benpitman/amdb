@@ -1,6 +1,7 @@
 <?php
 
 use Kentron\Facade\Phinx\Template\AMigration;
+use Phinx\Db\Adapter\MysqlAdapter;
 
 final class Title extends AMigration
 {
@@ -30,13 +31,7 @@ final class Title extends AMigration
 
     private function createTitle(): void
     {
-        $table = $this->table(
-            "title",
-            [
-                "id"          => false,
-                "primary_key" => "title_imdb_id"
-            ]
-        );
+        $table = $this->table("title", ["id" => false]);
 
         $table->addColumn(
             "title_imdb_id",
@@ -46,7 +41,7 @@ final class Title extends AMigration
                 "null"   => false
             ]
         );
-        $table->addIndex("title_imdb_id", ["unique" => true]);
+        $table->addIndex("title_imdb_id", ["unique" => false]);
 
         $table->addColumn(
             "title_title_type_id",
@@ -99,14 +94,16 @@ final class Title extends AMigration
                 "null"   => false
             ]
         );
+        $table->addIndex(["title_primary","title_original"], ["type" => "fulltext"]);
 
         $table->addColumn(
             "title_description",
-            "string",
+            "text",
             [
-                "after"  => "title_original",
-                "length" => 5095,
-                "null"   => false
+                "after"   => "title_original",
+                "length"  => MysqlAdapter::TEXT_REGULAR,
+                "null"    => true,
+                "default" => null
             ]
         );
 
@@ -144,9 +141,5 @@ final class Title extends AMigration
         );
 
         $table->save();
-
-        $this->execute(
-            "CREATE FULLTEXT INDEX title_primary_original_IDX ON `amdb-dev`.title (title_primary,title_original);"
-        );
     }
 }

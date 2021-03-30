@@ -50,6 +50,9 @@ abstract class ADataset extends AAlert
      */
     public function download(): void
     {
+        $this->uncompress();
+        $this->insert();
+        return;
         $curl = new Curl();
         $fileHandle = fopen($this->gzPath, "w");
 
@@ -101,6 +104,6 @@ abstract class ADataset extends AAlert
         $this->process($rawFileHandle);
 
         fclose($rawFileHandle);
-        // unlink($this->rawPath);
+        unlink($this->rawPath);
     }
 }
