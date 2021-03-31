@@ -4,12 +4,12 @@ namespace App\Core\Factory;
 
 use Kentron\Factory\AControllerFactory;
 
-use App\Http\Api\Controller\Search\SearchController as ApiSearchController;
+use App\Http\Api\Controller\Title\TitleController as ApiTitleController;
 
 final class ControllerFactory extends AControllerFactory
 {
-    public static function getApiSearch (string $method): callable
+    public static function getApiTitle (string $method): callable
     {
-        return parent::getController(ApiSearchController::class, $method);
+        return parent::getController(ApiTitleController::class, $method);
     }
 }

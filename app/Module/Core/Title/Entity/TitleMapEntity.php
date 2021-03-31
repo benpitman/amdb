@@ -2,8 +2,10 @@
 
 namespace App\Module\Core\Title\Entity;
 
-use App\Module\Core\Genre\Entity\GenreCollectionEntity;
+use App\Module\Core\TitleGenre\Entity\TitleGenreCollectionEntity;
 use Kentron\Entity\Template\AMapEntity;
+use App\Module\Core\TitleDescription\Entity\TitleDescriptionMapEntity;
+use App\Module\Core\Type\Entity\TypeMapEntity;
 
 final class TitleMapEntity extends AMapEntity
 {
@@ -14,7 +16,7 @@ final class TitleMapEntity extends AMapEntity
     /**
      * @var int
      */
-    private $titleTypeId;
+    private $typeId;
     /**
      * @var string|null
      */
@@ -23,10 +25,6 @@ final class TitleMapEntity extends AMapEntity
      * @var string
      */
     private $original;
-    /**
-     * @var string|null
-     */
-    private $description;
     /**
      * @var int|null
      */
@@ -43,9 +41,17 @@ final class TitleMapEntity extends AMapEntity
     // Non-table properties
 
     /**
-     * @var GenreCollectionEntity
+     * @var TypeMapEntity
      */
-    private $genreCollectionEntity;
+    private $typeMapEntity;
+    /**
+     * @var TitleGenreCollectionEntity|null
+     */
+    private $titleGenreCollectionEntity;
+    /**
+     * @var TitleDescriptionMapEntity|null
+     */
+    private $titleDescriptionMapEntity;
 
     /**
      * Setters
@@ -56,9 +62,9 @@ final class TitleMapEntity extends AMapEntity
         $this->imdbId = $imdbId;
     }
 
-    public function setTitleTypeId(int $titleTypeId): void
+    public function setTypeId(int $typeId): void
     {
-        $this->titleTypeId = $titleTypeId;
+        $this->typeId = $typeId;
     }
 
     public function setPrimary(string $primary): void
@@ -69,11 +75,6 @@ final class TitleMapEntity extends AMapEntity
     public function setOriginal(string $original): void
     {
         $this->original = $original;
-    }
-
-    public function setDescription(string $description): void
-    {
-        $this->description = $description;
     }
 
     public function setRuntime(int $runtime): void
@@ -91,9 +92,19 @@ final class TitleMapEntity extends AMapEntity
         $this->endYear = $endYear;
     }
 
-    public function setGenreCollectionEntity(GenreCollectionEntity $genreCollectionEntity): void
+    public function setTypeMapEntity(TypeMapEntity $typeMapEntity): void
     {
-        $this->genreCollectionEntity = $genreCollectionEntity;
+        $this->typeMapEntity = $typeMapEntity;
+    }
+
+    public function setTitleGenreCollectionEntity(TitleGenreCollectionEntity $titleGenreCollectionEntity): void
+    {
+        $this->titleGenreCollectionEntity = $titleGenreCollectionEntity;
+    }
+
+    public function setTitleDescriptionMapEntity(TitleDescriptionMapEntity $titleDescriptionMapEntity): void
+    {
+        $this->titleDescriptionMapEntity = $titleDescriptionMapEntity;
     }
 
     /**
@@ -105,14 +116,14 @@ final class TitleMapEntity extends AMapEntity
         return $this->imdbId;
     }
 
-    public function getTitleTypeId(): int
+    public function getTypeId(): int
     {
-        return $this->titleTypeId;
+        return $this->typeId;
     }
 
-    public function getGenres(): array
+    public function getTitleGenres(): array
     {
-        return $this->genreCollectionEntity->map(["getText"], true);
+        return $this->titleGenreCollectionEntity->map(["getText"], true);
     }
 
     public function getPrimary(): ?string
@@ -123,11 +134,6 @@ final class TitleMapEntity extends AMapEntity
     public function getOriginal(): string
     {
         return $this->original;
-    }
-
-    public function getDescription(): ?string
-    {
-        return $this->description;
     }
 
     public function getRuntime(): ?int
@@ -145,8 +151,40 @@ final class TitleMapEntity extends AMapEntity
         return $this->endYear;
     }
 
-    public function getGenreCollectionEntity(): ?GenreCollectionEntity
+    public function getTypeMapEntity(): TypeMapEntity
     {
-        return $this->genreCollectionEntity;
+        return $this->typeMapEntity;
+    }
+
+    public function getTitleGenreCollectionEntity(): ?TitleGenreCollectionEntity
+    {
+        return $this->titleGenreCollectionEntity;
+    }
+
+    public function getTitleDescriptionMapEntity(): ?TitleDescriptionMapEntity
+    {
+        return $this->titleDescriptionMapEntity;
+    }
+
+    /**
+     * Helpers
+     */
+
+    public function getType(): string
+    {
+        return $this->typeMapEntity->getText();
+    }
+
+    public function getGenres(): array
+    {
+        if (is_null($this->titleGenreCollectionEntity)) {
+            return [];
+        }
+        return $this->titleGenreCollectionEntity->map(["getText"], true);
+    }
+
+    public function getDescription(): ?string
+    {
+        return $this->titleDescriptionMapEntity?->getText();
     }
 }

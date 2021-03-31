@@ -1,7 +1,6 @@
 <?php
 
 use Kentron\Facade\Phinx\Template\AMigration;
-use Phinx\Db\Adapter\MysqlAdapter;
 
 final class Title extends AMigration
 {
@@ -31,7 +30,13 @@ final class Title extends AMigration
 
     private function createTitle(): void
     {
-        $table = $this->table("title", ["id" => false]);
+        $table = $this->table(
+            "title",
+            [
+                "id"          => false,
+                "primary_key" => "title_imdb_id"
+            ]
+        );
 
         $table->addColumn(
             "title_imdb_id",
@@ -44,7 +49,7 @@ final class Title extends AMigration
         $table->addIndex("title_imdb_id", ["unique" => false]);
 
         $table->addColumn(
-            "title_title_type_id",
+            "title_type_id",
             "integer",
             [
                 "after"  => "title_imdb_id",
@@ -54,9 +59,9 @@ final class Title extends AMigration
             ]
         );
         $table->addForeignKey(
-            "title_title_type_id",
-            "title_type",
             "title_type_id",
+            "type",
+            "type_id",
             [
                 "delete" => "RESTRICT",
                 "update" => "CASCADE"
@@ -64,24 +69,12 @@ final class Title extends AMigration
         );
 
         $table->addColumn(
-            "title_genres",
-            "string",
-            [
-                "after"   => "title_title_type_id",
-                "length"  => 127,
-                "null"    => true,
-                "default" => null
-            ]
-        );
-
-        $table->addColumn(
             "title_primary",
             "string",
             [
-                "after"   => "title_genres",
+                "after"   => "title_type_id",
                 "length"  => 511,
-                "null"    => true,
-                "default" => null
+                "null"   => false
             ]
         );
 
@@ -91,27 +84,17 @@ final class Title extends AMigration
             [
                 "after"  => "title_primary",
                 "length" => 511,
-                "null"   => false
+                "null"    => true,
+                "default" => null
             ]
         );
         $table->addIndex(["title_primary","title_original"], ["type" => "fulltext"]);
 
         $table->addColumn(
-            "title_description",
-            "text",
-            [
-                "after"   => "title_original",
-                "length"  => MysqlAdapter::TEXT_REGULAR,
-                "null"    => true,
-                "default" => null
-            ]
-        );
-
-        $table->addColumn(
             "title_runtime",
             "integer",
             [
-                "after"   => "title_description",
+                "after"   => "title_original",
                 "length"  => 3,
                 "null"    => true,
                 "default" => null

@@ -4,12 +4,15 @@ namespace App\Module\Core\Imdb;
 
 use App\Core\Service\Error;
 use App\Core\Store\Imdb;
-use App\Module\Core\Entity\Database\Poster\PosterDBEntity;
+use App\Module\Core\Entity\Database\TitleDescription\TitleDescriptionDBEntity;
+use App\Module\Core\Entity\Database\TitlePoster\TitlePosterDBEntity;
 use App\Module\Core\Imdb\Entity\ImdbEntity;
 use Kentron\Service\File;
 use App\Module\Core\Imdb\Template\ADataset;
-use App\Module\Core\Poster\Entity\PosterMapEntity;
-use App\Module\Core\Title\TitleSqlService;
+use App\Module\Core\TitlePoster\Entity\TitlePosterMapEntity;
+use App\Module\Core\TitleDescription\Entity\TitleDescriptionMapEntity;
+use App\Module\Core\TitleDescription\TitleDescriptionSqlService;
+use App\Module\Core\TitlePoster\TitlePosterSqlService;
 
 final class ImdbService
 {
@@ -62,18 +65,19 @@ final class ImdbService
             return false;
         }
 
-        $smallCover = $matches[0];
-        $fullCover = preg_replace('/(.=?\._V1_).+(.\w{3})$/', '$1$2', $smallCover);
+        /** @var string|null */
+        $smallCover = $matches[0] ?? null;
+        /** @var string|null */
+        $fullCover = preg_replace('/(.=?\._V1_).+(.\w{3})$/', '$1$2', $smallCover) ?: null;
 
-        if (is_string($smallCover) || is_string($fullCover)) {
+        /** @var TitlePosterMapEntity|TitlePosterDBEntity */
+        $titlePosterDBEntity = new TitlePosterDBEntity();
 
-            /** @var PosterMapEntity|PosterDBEntity */
-            $posterDBEntity = new PosterDBEntity();
+        $titlePosterDBEntity->setImdbId($imdbId);
+        $titlePosterDBEntity->setSmall($smallCover);
+        $titlePosterDBEntity->setFull($fullCover);
 
-            $posterDBEntity->setImdbId($imdbId);
-            $posterDBEntity->setSmall($smallCover);
-            $posterDBEntity->setFull($fullCover);
-        }
+        TitlePosterSqlService::insertOne($titlePosterDBEntity);
 
         return true;
     }
@@ -87,14 +91,13 @@ final class ImdbService
             return false;
         }
 
-        $description = $matches[0] ?? null;
+        /** @var TitleDescriptionMapEntity|TitleDescriptionDBEntity */
+        $titleDescriptionDBEntity = new TitleDescriptionDBEntity();
 
-        if (is_string($description)) {
-            TitleSqlService::updateDescription(
-                $imdbId,
-                $description
-            );
-        }
+        $titleDescriptionDBEntity->setImdbId($imdbId);
+        $titleDescriptionDBEntity->setText($matches[0] ?? null);
+
+        TitleDescriptionSqlService::insertOne($titleDescriptionDBEntity);
 
         return true;
     }

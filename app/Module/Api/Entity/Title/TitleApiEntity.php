@@ -23,9 +23,6 @@ final class TitleApiEntity extends AApiEntity
         "title_original" => [
             "get" => "getOriginal"
         ],
-        "description" => [
-            "get" => "getDescription"
-        ],
         "runtime" => [
             "get" => "getRuntime"
         ],
@@ -37,8 +34,8 @@ final class TitleApiEntity extends AApiEntity
         ]
     ];
 
-    public function __construct(TitleMapEntity $titleMapEntity)
+    public function __construct(TitleMapEntity $titleMapEntity = null)
     {
-        parent::__construct($titleMapEntity);
+        parent::__construct($titleMapEntity ?? new TitleMapEntity());
     }
 }

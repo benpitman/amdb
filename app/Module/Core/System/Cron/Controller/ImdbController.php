@@ -11,23 +11,29 @@ use App\Module\Core\Imdb\ImdbService;
 
 final class ImdbController extends ACronController
 {
-    public function downloadTitleDataset(): ImdbEntity
+    public function updatePackages(): ?ImdbEntity
     {
-        return $this->getImdbService()->downloadPackage(new Title());
-    }
+        // TODO: create truncate
 
-    public function downloadRatingDataset(): ImdbEntity
-    {
-        return $this->getImdbService()->downloadPackage(new Rating());
-    }
+        $imdbService = new ImdbService();
+        $titleEntity = $imdbService->downloadPackage(new Title());
 
-    // public function downloadEpisodeDataset(): ImdbEntity
-    // {
-    //     return $this->getImdbService()->downloadPackage(new Episode());
-    // }
+        if ($titleEntity->hasErrors()) {
+            return $titleEntity;
+        }
 
-    private function getImdbService(): ImdbService
-    {
-        return new ImdbService();
+        $ratingEntity = $imdbService->downloadPackage(new Rating());
+
+        if ($ratingEntity->hasErrors()) {
+            return $ratingEntity;
+        }
+
+        // $episodeEntity = $imdbService->downloadPackage(new Episode());
+
+        // if ($episodeEntity->hasErrors()) {
+        //     return $episodeEntity;
+        // }
+
+        return null;
     }
 }

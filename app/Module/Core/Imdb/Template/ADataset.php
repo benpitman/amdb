@@ -50,32 +50,34 @@ abstract class ADataset extends AAlert
      */
     public function download(): void
     {
+        // $curl = new Curl();
+        // $fileHandle = fopen($this->gzPath, "w");
+
+        // $curl->setGet();
+        // $curl->setUrl($this->url);
+
+        // $callback = function ($ch, string $string) use ($fileHandle) {
+        //     fwrite($fileHandle, $string);
+        //     return strlen($string);
+        // };
+
+        // $curl->setOpt(CURLOPT_WRITEFUNCTION, $callback);
+
+        // if (!$curl->execute()) {
+        //     $this->addError($curl->getErrors());
+        //     fclose($fileHandle);
+
+        //     return;
+        // }
+
+        // fclose($fileHandle);
+
         $this->uncompress();
-        $this->insert();
-        return;
-        $curl = new Curl();
-        $fileHandle = fopen($this->gzPath, "w");
 
-        $curl->setGet();
-        $curl->setUrl($this->url);
-
-        $callback = function ($ch, string $string) use ($fileHandle) {
-            fwrite($fileHandle, $string);
-            return strlen($string);
-        };
-
-        $curl->setOpt(CURLOPT_WRITEFUNCTION, $callback);
-
-        if (!$curl->execute()) {
-            $this->addError($curl->getErrors());
-            fclose($fileHandle);
-
+        if ($this->hasErrors()) {
             return;
         }
 
-        fclose($fileHandle);
-
-        $this->uncompress();
         $this->insert();
     }
 

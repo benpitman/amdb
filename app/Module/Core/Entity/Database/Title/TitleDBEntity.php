@@ -12,9 +12,9 @@ final class TitleDBEntity extends ADBEntity
             "get" => "getImdbId",
             "set" => "setImdbId"
         ],
-        "title_title_type_id" => [
-            "get" => "getTitleTypeId",
-            "set" => "setTitleTypeId"
+        "title_type_id" => [
+            "get" => "getTypeId",
+            "set" => "setTypeId"
         ],
         "title_primary" => [
             "get" => "getPrimary",

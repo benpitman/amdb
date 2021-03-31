@@ -30,13 +30,7 @@ final class TitleGenre extends AMigration
 
     private function createTitleGenre(): void
     {
-        $table = $this->table(
-            "title_genre",
-            [
-                "id"          => false,
-                "primary_key" => "title_genre_imdb_id"
-            ]
-        );
+        $table = $this->table("title_genre", ["id" => false]);
 
         $table->addColumn(
             "title_genre_imdb_id",
@@ -46,14 +40,13 @@ final class TitleGenre extends AMigration
                 "null"   => false
             ]
         );
-        $table->addIndex("title_genre_imdb_id", ["unique" => true]);
         $table->addForeignKey(
             "title_genre_imdb_id",
             "title",
             "title_imdb_id",
             [
-                "delete" => "RESTRICT",
-                "update" => "RESTRICT"
+                "delete" => "CASCADE",
+                "update" => "CASCADE"
             ]
         );
 

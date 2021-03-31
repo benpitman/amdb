@@ -4,8 +4,9 @@ namespace App\Module\Core\Title;
 
 use App\Module\Api\Entity\SearchEntity;
 use App\Module\Core\Entity\Database\Title\TitleDBCollectionEntity;
+use App\Module\Core\Entity\Database\Title\TitleDBEntity;
 use App\Module\Core\Title\Repository\TitleRepository;
-use App\Module\Core\TitleType\TitleTypeSqlService;
+use App\Module\Core\Type\TypeSqlService;
 use Illuminate\Database\Capsule\Manager;
 
 final class TitleSqlService
@@ -30,8 +31,8 @@ final class TitleSqlService
         }
 
         $titleTypeId = $searchEntity->getType();
-        if (is_int($titleTypeId) && TitleTypeSqlService::isValidId($titleTypeId)) {
-            $titleRepository->whereTitleType($titleTypeId);
+        if (is_int($titleTypeId) && TypeSqlService::isValidId($titleTypeId)) {
+            $titleRepository->whereType($titleTypeId);
         }
 
         $titleRepository->limit($searchEntity->getLimit());
@@ -49,13 +50,18 @@ final class TitleSqlService
         );
     }
 
-    public static function updateDescription(string $imdbId, string $description): void
+    public static function getOneByImdbId(string $imdbId): TitleDBEntity
     {
-        $titleRepsoitory = new TitleRepository();
+        $titleRepository = new TitleRepository();
+        $titleDBEntity = new TitleDBEntity();
 
-        $titleRepsoitory->whereImdbId($imdbId);
-        $titleRepsoitory->updateDescription($description);
+        $titleRepository->whereImdbId($imdbId);
 
-        $titleRepsoitory->runUpdate();
+        if (!$titleRepository->buildFirst($titleDBEntity)) {
+            $titleDBEntity->addError("No title with IMDB constant '{$imdbId}' exists");
+            return $titleDBEntity;
+        }
+
+        return $titleDBEntity;
     }
 }

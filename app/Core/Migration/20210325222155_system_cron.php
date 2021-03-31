@@ -125,15 +125,7 @@ final class SystemCron extends AMigration
             [
                 "system_cron_id"           => 1,
                 "system_cron_class"        => "Imdb",
-                "system_cron_method"       => "downloadTitleDataset",
-                "system_cron_args"         => "[]",
-                "system_cron_interval"     => 604800, // One week
-                "system_cron_date_created" => $now
-            ],
-            [
-                "system_cron_id"           => 2,
-                "system_cron_class"        => "Imdb",
-                "system_cron_method"       => "downloadEpisodeDataset",
+                "system_cron_method"       => "updatePackages",
                 "system_cron_args"         => "[]",
                 "system_cron_interval"     => 604800, // One week
                 "system_cron_date_created" => $now

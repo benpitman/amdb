@@ -14,9 +14,9 @@ final class TitleRepository extends ARepository
         parent::where("title_imdb_id", $imdbId);
     }
 
-    public function whereTitleType(string $titleTypeId): void
+    public function whereType(string $typeId): void
     {
-        parent::where("title_title_type_id", $titleTypeId);
+        parent::where("title_type_id", $typeId);
     }
 
     public function whereDateCreatedGreaterThan (DT $date): void
