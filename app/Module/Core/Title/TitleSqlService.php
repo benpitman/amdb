@@ -26,9 +26,7 @@ final class TitleSqlService
             $titleRepository->whereDateCreatedLessThan($dateTo);
         }
 
-        foreach ($searchEntity->iterateQueries() as $query) {
-            $titleRepository->whereTitle($query);
-        }
+        $titleRepository->whereTitle($searchEntity->getQueriesAsArray());
 
         $titleTypeId = $searchEntity->getType();
         if (is_int($titleTypeId) && TypeSqlService::isValidId($titleTypeId)) {
@@ -37,6 +35,7 @@ final class TitleSqlService
 
         $titleRepository->limit($searchEntity->getLimit());
         $titleRepository->offset($searchEntity->getOffset());
+        $titleRepository->orderByDefault($searchEntity->getQueriesAsArray());
 
         $titleRepository->buildAll($titleDBCollectionEntity);
 

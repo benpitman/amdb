@@ -121,11 +121,6 @@ final class TitleMapEntity extends AMapEntity
         return $this->typeId;
     }
 
-    public function getTitleGenres(): array
-    {
-        return $this->titleGenreCollectionEntity->map(["getText"], true);
-    }
-
     public function getPrimary(): ?string
     {
         return $this->primary;
@@ -185,6 +180,9 @@ final class TitleMapEntity extends AMapEntity
 
     public function getDescription(): ?string
     {
-        return $this->titleDescriptionMapEntity?->getText();
+        if (is_null($this->titleDescriptionMapEntity)) {
+            return null;
+        }
+        return $this->titleDescriptionMapEntity->getText();
     }
 }

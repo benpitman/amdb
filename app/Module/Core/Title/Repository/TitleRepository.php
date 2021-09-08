@@ -29,9 +29,37 @@ final class TitleRepository extends ARepository
         parent::where("title_start_year", $date, "<");
     }
 
-    public function whereTitle (string $contains): void
+    /**
+     * @param string[] $titles
+     *
+     * @return void
+     */
+    public function whereTitle (array $titles): void
     {
-        parent::whereRaw("MATCH (title_primary, title_original) AGAINST ('{$contains}')");
+        $contains = "+" . implode(" +", $titles);
+        parent::whereRaw(
+            <<<SQL
+                MATCH (title_primary, title_original) AGAINST ('{$contains}' IN BOOLEAN MODE)
+            SQL
+        );
+    }
+
+    /**
+     * @param string[] $titles
+     *
+     * @return void
+     */
+    public function orderByDefault (array $titles): void
+    {
+        $length = array_walk($titles, fn (string $title) => strlen($title));
+
+        parent::orderByRaw(
+            <<<SQL
+                ABS( {$length} - LENGTH(title_primary) ),
+                title_primary,
+                title_start_year DESC
+            SQL
+        );
     }
 
     public function updateDescription(string $description): void

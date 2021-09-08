@@ -126,11 +126,12 @@ final class SearchEntity extends AApiEntity
      * Helpers
      */
 
-    public function iterateQueries(): iterable
+    /**
+     * @return string[]
+     */
+    public function getQueriesAsArray(): array
     {
-        foreach (explode(" ", $this->query) as $query) {
-            yield $query;
-        }
+        return explode(" ", $this->query);
     }
 
     public function getOffset(): int

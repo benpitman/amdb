@@ -23,8 +23,9 @@ final class TypeSqlService
         $typeRepository = new TypeRepository();
 
         $typeRepository->whereId($typeId);
+        $typeRepository->get();
 
-        return !!$typeRepository->first();
+        return !$typeRepository->isEmpty();
     }
 
     public static function getOneById(int $typeId): TypeDBEntity
